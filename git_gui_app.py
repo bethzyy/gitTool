@@ -253,26 +253,15 @@ class GitGuiApp:
             self.update_status("正在执行 Git 操作...", "#0066cc")
 
             # 步骤2: 执行 Git 命令
-            # 首先获取当前分支名
-            get_branch_cmd = f'cd "{code_path}" && git rev-parse --abbrev-ref HEAD 2>nul || echo "main"'
-            branch_result = subprocess.run(get_branch_cmd,
-                                         shell=True,
-                                         capture_output=True,
-                                         text=True,
-                                         encoding='utf-8',
-                                         errors='replace')
-            current_branch = branch_result.stdout.strip() or "main"
-            self.log("INFO", f"当前分支: {current_branch}")
-
             commands = [
                 ('检查 Git 仓库', f'cd "{code_path}" && git rev-parse --git-dir 2>nul || git init'),
                 ('添加文件', f'cd "{code_path}" && git add .'),
                 ('提交更改', f'cd "{code_path}" && git commit -m "{commit_msg}"'),
                 ('添加远程仓库', f'cd "{code_path}" && git remote add origin {repo_url} 2>nul || git remote set-url origin {repo_url}'),
-                ('推送到 GitHub', f'cd "{code_path}" && git push -u origin {current_branch}')
             ]
 
-            for desc, cmd in commands:
+            # 执行前面的命令
+            for desc, cmd in commands[:4]:
                 self.log("INFO", f"执行: {desc}")
                 self.update_status(f"正在{desc}...", "#0066cc")
 
@@ -297,6 +286,37 @@ class GitGuiApp:
                         return
                     elif "fatal:" in error_output or "error:" in error_output.lower():
                         raise Exception(f"Git 命令失败: {error_output}")
+
+            # 在提交后获取当前分支名
+            get_branch_cmd = f'cd "{code_path}" && git rev-parse --abbrev-ref HEAD'
+            branch_result = subprocess.run(get_branch_cmd,
+                                         shell=True,
+                                         capture_output=True,
+                                         text=True,
+                                         encoding='utf-8',
+                                         errors='replace')
+            current_branch = branch_result.stdout.strip() or "master"
+            self.log("INFO", f"当前分支: {current_branch}")
+
+            # 推送到远程仓库
+            push_cmd = f'cd "{code_path}" && git push -u origin {current_branch}'
+            self.log("INFO", "执行: 推送到 GitHub")
+            self.update_status("正在推送到 GitHub...", "#0066cc")
+
+            result = subprocess.run(push_cmd,
+                                  shell=True,
+                                  capture_output=True,
+                                  text=True,
+                                  encoding='utf-8',
+                                  errors='replace')
+
+            if result.stdout:
+                self.log("DEBUG", result.stdout.strip())
+
+            if result.stderr:
+                error_output = result.stderr.strip()
+                if "fatal:" in error_output or "error:" in error_output.lower():
+                    raise Exception(f"Git 命令失败: {error_output}")
 
             # 成功
             self.log("INFO", "Git 操作成功完成")

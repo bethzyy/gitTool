@@ -23,3 +23,29 @@
 [2025-12-30 07:52:47] [INFO] 执行: 检查 Git 仓库
 [2025-12-30 07:52:47] [DEBUG] Initialized empty Git repository in C:/D/CAIE_tool/MyAIProduct/gitTool/.git/
 [2025-12-30 07:52:47] [INFO] 执行: 添加文件
+[2025-12-30 07:52:48] [INFO] 执行: 提交更改
+[2025-12-30 07:52:48] [DEBUG] [master (root-commit) 194149d] 推送gitTool的代码
+ 12 files changed, 1414 insertions(+)
+ create mode 100644 __pycache__/git_gui_app.cpython-311.pyc
+ create mode 100644 docs/CLAUDE.md
+ create mode 100644 docs/README.md
+ create mode 100644 "docs/\344\275\277\347\224\250\350\257\264\346\230\216.md"
+ create mode 100644 "docs/\345\277\253\351\200\237\345\274\200\345\247\213.md"
+ create mode 100644 "docs/\346\226\207\344\273\266\350\257\264\346\230\216.md"
+ create mode 100644 git_gui_app.py
+ create mode 100644 logs/app-2025-12-29.log
+ create mode 100644 logs/app-2025-12-30.log
+ create mode 100644 scripts/debug_match.py
+ create mode 100644 scripts/test_security_scan.py
+ create mode 100644 "\345\220\257\345\212\250\345\272\224\347\224\250.bat"
+[2025-12-30 07:52:48] [INFO] 执行: 添加远程仓库
+[2025-12-30 07:52:48] [INFO] 执行: 推送到 GitHub
+[2025-12-30 07:52:48] [ERROR] Git 命令失败: error: src refspec main does not match any
+error: failed to push some refs to 'github.com:bethzyy/gitTool.git'
+[2025-12-30 07:54:53] [INFO] 应用程序启动
+[2025-12-30 07:55:16] [INFO] 开始执行 Git 提交操作
+[2025-12-30 07:55:16] [INFO] 执行安全检查...
+[2025-12-30 07:55:16] [INFO] 安全检查通过
+[2025-12-30 07:55:16] [INFO] 执行: 检查 Git 仓库
+[2025-12-30 07:55:16] [DEBUG] .git
+[2025-12-30 07:55:16] [INFO] 执行: 添加文件
