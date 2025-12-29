@@ -1,0 +1,43 @@
+[2025-12-29 21:41:57] [INFO] 应用程序启动
+[2025-12-29 21:42:43] [INFO] 开始执行 Git 提交操作
+[2025-12-29 21:42:44] [INFO] 执行安全检查...
+[2025-12-29 21:42:44] [INFO] 安全检查通过
+[2025-12-29 21:42:44] [INFO] 执行: 检查 Git 仓库
+[2025-12-29 21:42:44] [DEBUG] .git
+[2025-12-29 21:42:44] [INFO] 执行: 添加文件
+[2025-12-29 21:42:44] [INFO] 执行: 提交更改
+[2025-12-29 21:42:44] [DEBUG] On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+[2025-12-29 21:42:44] [INFO] 执行: 添加远程仓库
+[2025-12-29 21:42:44] [INFO] 执行: 推送到 GitHub
+[2025-12-29 21:42:44] [ERROR] Git 命令失败: error: src refspec master does not match any
+error: failed to push some refs to 'github.com:bethzyy/jobMatchTool.git'
+[2025-12-29 21:54:41] [INFO] 应用程序启动
+[2025-12-29 21:58:16] [INFO] 开始执行 Git 提交操作
+[2025-12-29 21:58:16] [INFO] 执行安全检查...
+[2025-12-29 21:58:16] [INFO] 安全检查通过
+[2025-12-29 21:58:17] [INFO] 当前分支: main
+[2025-12-29 21:58:17] [INFO] 执行: 检查 Git 仓库
+[2025-12-29 21:58:17] [DEBUG] .git
+[2025-12-29 21:58:17] [INFO] 执行: 添加文件
+[2025-12-29 21:58:17] [INFO] 执行: 提交更改
+[2025-12-29 21:58:18] [DEBUG] [main f0c578d] 成功抓取
+ 3 files changed, 34 insertions(+), 6 deletions(-)
+ delete mode 100644 jobs_example.csv
+ create mode 100644 jobs_result.csv
+ create mode 100644 jobs_result_sim.csv
+[2025-12-29 21:58:18] [INFO] 执行: 添加远程仓库
+[2025-12-29 21:58:18] [INFO] 执行: 推送到 GitHub
+[2025-12-29 21:58:22] [DEBUG] branch 'main' set up to track 'origin/main'.
+[2025-12-29 21:58:22] [INFO] Git 操作成功完成
+[2025-12-29 22:03:12] [INFO] 开始执行 Git 提交操作
+[2025-12-29 22:03:12] [INFO] 执行安全检查...
+[2025-12-29 22:03:33] [WARN] 发现 2 个安全问题
+[2025-12-29 22:04:30] [INFO] 开始执行 Git 提交操作
+[2025-12-29 22:04:30] [INFO] 执行安全检查...
+[2025-12-29 22:07:57] [WARN] 发现 2 个安全问题
+[2025-12-29 22:09:03] [INFO] 应用程序启动
+[2025-12-29 22:10:03] [INFO] 应用程序启动
+[2025-12-29 22:11:15] [INFO] 应用程序启动
