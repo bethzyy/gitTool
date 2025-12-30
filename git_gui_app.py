@@ -39,24 +39,73 @@ class GitGuiApp:
         style = ttk.Style()
         style.theme_use('clam')
 
-        # 按钮样式
+        # 定义清新的配色方案
+        bg_color = '#f5f6fa'  # 浅灰蓝背景
+        primary_color = '#4a90e2'  # 清新蓝色
+        success_color = '#52c41a'  # 成功绿
+        text_color = '#2c3e50'  # 深灰文字
+        border_color = '#d9e2ec'  # 边框颜色
+
+        # 设置根窗口背景
+        self.root.configure(bg=bg_color)
+
+        # 按钮样式 - 使用渐变蓝色
         style.configure('Submit.TButton',
-                       font=('Arial', 12, 'bold'),
-                       padding=10)
+                       font=('Microsoft YaHei UI', 11, 'bold'),
+                       padding=12,
+                       background=primary_color,
+                       foreground='white',
+                       borderwidth=0,
+                       focuscolor='none')
+        style.map('Submit.TButton',
+                 background=[('active', '#357abd'),
+                           ('pressed', '#2e68a8')])
+
+        # 标题样式
+        style.configure('Title.TLabel',
+                       font=('Microsoft YaHei UI', 18, 'bold'),
+                       foreground=text_color,
+                       background=bg_color)
 
         # 标签样式
-        style.configure('Title.TLabel',
-                       font=('Arial', 14, 'bold'),
-                       foreground='#333')
-
         style.configure('Label.TLabel',
-                       font=('Arial', 10),
-                       foreground='#555')
+                       font=('Microsoft YaHei UI', 10),
+                       foreground='#5a6c7d',
+                       background=bg_color)
+
+        # TFrame 样式
+        style.configure('TFrame',
+                       background=bg_color)
+
+        # TEntry 样式
+        style.configure('TEntry',
+                       fieldbackground='white',
+                       borderwidth=1,
+                       relief='solid',
+                       padding=8)
+        style.map('TEntry',
+                 bordercolor=[('focus', primary_color)],
+                 lightcolor=[('focus', primary_color)],
+                 darkcolor=[('focus', primary_color)])
+
+        # TCheckbutton 样式
+        style.configure('TCheckbutton',
+                       font=('Microsoft YaHei UI', 9),
+                       foreground='#5a6c7d',
+                       background=bg_color)
+
+        # TProgressbar 样式
+        style.configure('TProgressbar',
+                       thickness=8,
+                       troughcolor='#e1e8ed',
+                       background=primary_color,
+                       borderwidth=0,
+                       relief='flat')
 
     def create_widgets(self):
         """创建界面组件"""
         # 主容器
-        main_frame = ttk.Frame(self.root, padding="20")
+        main_frame = ttk.Frame(self.root, padding="25")
         main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
 
         # 配置行列权重
@@ -66,10 +115,12 @@ class GitGuiApp:
 
         row = 0
 
-        # 标题
-        title = ttk.Label(main_frame, text="Git GUI 提交工具",
+        # 标题 - 居中显示
+        title_frame = ttk.Frame(main_frame)
+        title_frame.grid(row=row, column=0, columnspan=3, pady=(0, 25))
+        title = ttk.Label(title_frame, text="🚀 Git GUI 提交工具",
                          style='Title.TLabel')
-        title.grid(row=row, column=0, columnspan=3, pady=(0, 20))
+        title.pack()
         row += 1
 
         # Git 仓库名称
@@ -105,8 +156,9 @@ class GitGuiApp:
         default_path = str(Path(__file__).parent)
         self.code_path.insert(0, default_path)
 
-        browse_btn = ttk.Button(path_frame, text="浏览...",
-                               command=self.browse_folder)
+        browse_btn = ttk.Button(path_frame, text="📁 浏览",
+                               command=self.browse_folder,
+                               width=8)
         browse_btn.grid(row=0, column=1)
         row += 1
 
@@ -118,36 +170,51 @@ class GitGuiApp:
         row += 1
 
         # 提交按钮
-        self.submit_btn = ttk.Button(main_frame, text="提交到 GitHub",
+        self.submit_btn = ttk.Button(main_frame, text="📤 提交到 GitHub",
                                     style='Submit.TButton',
                                     command=self.on_submit)
-        self.submit_btn.grid(row=row, column=0, columnspan=3, pady=20)
+        self.submit_btn.grid(row=row, column=0, columnspan=3, pady=(15, 25))
         row += 1
 
         # 进度条
         self.progress = ttk.Progressbar(main_frame, mode='indeterminate')
-        self.progress.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=10)
+        self.progress.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 10))
         row += 1
 
         # 状态标签
-        self.status_label = ttk.Label(main_frame, text="",
-                                    foreground='#555')
+        self.status_label = tk.Label(main_frame, text="",
+                                    font=('Microsoft YaHei UI', 9),
+                                    fg='#5a6c7d',
+                                    bg='#f5f6fa')
         self.status_label.grid(row=row, column=0, columnspan=3, pady=5)
         row += 1
 
         # 日志输出区域
-        ttk.Label(main_frame, text="运行日志:",
-                 style='Label.TLabel').grid(row=row, column=0, sticky=tk.W, pady=(10, 5))
+        log_label = tk.Label(main_frame, text="📋 运行日志",
+                            font=('Microsoft YaHei UI', 10, 'bold'),
+                            fg='#2c3e50',
+                            bg='#f5f6fa')
+        log_label.grid(row=row, column=0, sticky=tk.W, pady=(15, 8))
         row += 1
 
-        self.log_output = scrolledtext.ScrolledText(main_frame,
+        # 创建日志框容器
+        log_frame = tk.Frame(main_frame, bg='white', relief='solid', borderwidth=1)
+        log_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 5))
+        main_frame.rowconfigure(row, weight=1)
+
+        self.log_output = scrolledtext.ScrolledText(log_frame,
                                                     width=60,
                                                     height=15,
                                                     wrap=tk.WORD,
-                                                    font=('Consolas', 9))
-        self.log_output.grid(row=row, column=0, columnspan=3,
-                            sticky=(tk.W, tk.E, tk.N, tk.S), pady=5)
-        main_frame.rowconfigure(row, weight=1)
+                                                    font=('Consolas', 9),
+                                                    bg='#fafbfc',
+                                                    fg='#2c3e50',
+                                                    insertbackground='white',
+                                                    relief='flat',
+                                                    borderwidth=0,
+                                                    padx=10,
+                                                    pady=8)
+        self.log_output.pack(fill=tk.BOTH, expand=True)
 
     def browse_folder(self):
         """浏览文件夹"""
