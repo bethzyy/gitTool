@@ -110,3 +110,17 @@ error: failed to push some refs to 'github.com:bethzyy/gitTool.git'
 [2025-12-30 09:05:46] [DEBUG] .git
 [2025-12-30 09:05:46] [INFO] 执行: 添加文件
 [2025-12-30 09:05:46] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git add .
+[2025-12-30 09:05:47] [INFO] 执行: 提交更改
+[2025-12-30 09:05:47] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git commit -m "test safety"
+[2025-12-30 09:05:47] [DEBUG] [master ec83b39] test safety
+ 2 files changed, 24 insertions(+)
+ create mode 100644 testSafetey.txt
+[2025-12-30 09:05:47] [INFO] 执行: 添加远程仓库
+[2025-12-30 09:05:47] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git remote add origin git@github.com:bethzyy/gitTool.git 2>nul || git remote set-url origin git@github.com:bethzyy/gitTool.git
+[2025-12-30 09:05:47] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git rev-parse --abbrev-ref HEAD
+[2025-12-30 09:05:47] [INFO] 当前分支: master
+[2025-12-30 09:05:47] [INFO] 执行: 推送到 GitHub
+[2025-12-30 09:05:47] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git push -u origin master
+[2025-12-30 09:05:51] [DEBUG] branch 'master' set up to track 'origin/master'.
+[2025-12-30 09:05:51] [INFO] Git 操作成功完成
+[2025-12-30 09:08:42] [INFO] 应用程序启动
