@@ -110,6 +110,13 @@ class GitGuiApp:
         browse_btn.grid(row=0, column=1)
         row += 1
 
+        # 安全分析选项
+        self.security_check_var = tk.BooleanVar(value=True)  # 默认选中
+        security_check = ttk.Checkbutton(main_frame, text="提交前进行安全分析（检查API密钥等敏感信息）",
+                                        variable=self.security_check_var)
+        security_check.grid(row=row, column=0, columnspan=3, sticky=tk.W, pady=10)
+        row += 1
+
         # 提交按钮
         self.submit_btn = ttk.Button(main_frame, text="提交到 GitHub",
                                     style='Submit.TButton',
@@ -214,42 +221,49 @@ class GitGuiApp:
         # 构建完整的仓库地址
         repo_url = f"git@github.com:bethzyy/{repo_name}.git"
 
+        # 获取安全检查选项
+        enable_security_check = self.security_check_var.get()
+
         # 在新线程中执行
         thread = threading.Thread(target=self.execute_git_operations,
-                                 args=(repo_url, commit_msg, code_path))
+                                 args=(repo_url, commit_msg, code_path, enable_security_check))
         thread.daemon = True
         thread.start()
 
-    def execute_git_operations(self, repo_url, commit_msg, code_path):
+    def execute_git_operations(self, repo_url, commit_msg, code_path, enable_security_check=True):
         """执行 Git 操作"""
         try:
             self.set_loading(True)
-            self.update_status("正在执行安全检查...", "#0066cc")
             self.log("INFO", "开始执行 Git 提交操作")
 
-            # 步骤1: 安全检查
-            self.log("INFO", "执行安全检查...")
-            security_issues = self.scan_for_sensitive_data(code_path)
+            # 步骤1: 安全检查（如果启用）
+            if enable_security_check:
+                self.update_status("正在执行安全检查...", "#0066cc")
+                self.log("INFO", "执行安全检查...")
+                security_issues = self.scan_for_sensitive_data(code_path)
 
-            if security_issues:
-                self.set_loading(False)
+                if security_issues:
+                    self.set_loading(False)
 
-                # 显示安全问题
-                issue_text = "检测到敏感信息，为了安全起见，请先移除或替换以下内容后再提交：\n\n"
-                for issue in security_issues[:10]:  # 只显示前10个
-                    issue_text += f"• 类型: {issue['category']}\n"
-                    issue_text += f"  文件: {issue['file']}\n"
-                    issue_text += f"  内容: {issue['match'][:80]}...\n\n"
+                    # 显示安全问题
+                    issue_text = "检测到敏感信息，为了安全起见，请先移除或替换以下内容后再提交：\n\n"
+                    for issue in security_issues[:10]:  # 只显示前10个
+                        issue_text += f"• 类型: {issue['category']}\n"
+                        issue_text += f"  文件: {issue['file']}\n"
+                        issue_text += f"  内容: {issue['match'][:80]}...\n\n"
 
-                if len(security_issues) > 10:
-                    issue_text += f"\n... 还有 {len(security_issues) - 10} 个问题未显示"
+                    if len(security_issues) > 10:
+                        issue_text += f"\n... 还有 {len(security_issues) - 10} 个问题未显示"
 
-                messagebox.showwarning("安全警告", issue_text)
-                self.update_status("安全检查失败", "#cc0000")
-                self.log("WARN", f"发现 {len(security_issues)} 个安全问题")
-                return
+                    messagebox.showwarning("安全警告", issue_text)
+                    self.update_status("安全检查失败", "#cc0000")
+                    self.log("WARN", f"发现 {len(security_issues)} 个安全问题")
+                    return
 
-            self.log("INFO", "安全检查通过")
+                self.log("INFO", "安全检查通过")
+            else:
+                self.log("INFO", "安全检查已跳过")
+
             self.update_status("正在执行 Git 操作...", "#0066cc")
 
             # 步骤2: 执行 Git 命令
@@ -261,8 +275,9 @@ class GitGuiApp:
             ]
 
             # 执行前面的命令
-            for desc, cmd in commands[:4]:
+            for desc, cmd in commands:
                 self.log("INFO", f"执行: {desc}")
+                self.log("COMMAND", f"$ {cmd}")  # 显示完整命令
                 self.update_status(f"正在{desc}...", "#0066cc")
 
                 result = subprocess.run(cmd,
@@ -289,6 +304,7 @@ class GitGuiApp:
 
             # 在提交后获取当前分支名
             get_branch_cmd = f'cd "{code_path}" && git rev-parse --abbrev-ref HEAD'
+            self.log("COMMAND", f"$ {get_branch_cmd}")  # 显示命令
             branch_result = subprocess.run(get_branch_cmd,
                                          shell=True,
                                          capture_output=True,
@@ -301,6 +317,7 @@ class GitGuiApp:
             # 推送到远程仓库
             push_cmd = f'cd "{code_path}" && git push -u origin {current_branch}'
             self.log("INFO", "执行: 推送到 GitHub")
+            self.log("COMMAND", f"$ {push_cmd}")  # 显示命令
             self.update_status("正在推送到 GitHub...", "#0066cc")
 
             result = subprocess.run(push_cmd,

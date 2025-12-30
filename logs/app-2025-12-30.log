@@ -49,3 +49,20 @@ error: failed to push some refs to 'github.com:bethzyy/gitTool.git'
 [2025-12-30 07:55:16] [INFO] 执行: 检查 Git 仓库
 [2025-12-30 07:55:16] [DEBUG] .git
 [2025-12-30 07:55:16] [INFO] 执行: 添加文件
+[2025-12-30 07:55:16] [INFO] 执行: 提交更改
+[2025-12-30 07:55:17] [DEBUG] [master 8a2eba8] Push gitTool itsself
+ 2 files changed, 59 insertions(+), 13 deletions(-)
+[2025-12-30 07:55:17] [INFO] 执行: 添加远程仓库
+[2025-12-30 07:55:17] [INFO] 当前分支: master
+[2025-12-30 07:55:17] [INFO] 执行: 推送到 GitHub
+[2025-12-30 07:55:22] [DEBUG] branch 'master' set up to track 'origin/master'.
+[2025-12-30 07:55:22] [INFO] Git 操作成功完成
+[2025-12-30 08:00:07] [INFO] 应用程序启动
+[2025-12-30 08:00:40] [INFO] 开始执行 Git 提交操作
+[2025-12-30 08:00:40] [INFO] 执行安全检查...
+[2025-12-30 08:00:40] [INFO] 安全检查通过
+[2025-12-30 08:00:40] [INFO] 执行: 检查 Git 仓库
+[2025-12-30 08:00:40] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git rev-parse --git-dir 2>nul || git init
+[2025-12-30 08:00:40] [DEBUG] .git
+[2025-12-30 08:00:40] [INFO] 执行: 添加文件
+[2025-12-30 08:00:40] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git add .
