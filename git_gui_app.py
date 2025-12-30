@@ -351,11 +351,80 @@ class GitGuiApp:
         thread.daemon = True
         thread.start()
 
+    def cleanup_temp_files(self, code_path):
+        """清理可能导致 Git 操作失败的临时文件
+
+        Args:
+            code_path: 代码路径
+
+        Returns:
+            list: 被删除的文件列表
+        """
+        import os
+        deleted_files = []
+
+        # Windows 保留设备名列表(会导致 Git 失败)
+        windows_reserved_names = ['nul', 'con', 'prn', 'aux', 'com1', 'com2', 'com3', 'com4',
+                                  'com5', 'com6', 'com7', 'com8', 'com9', 'lpt1', 'lpt2',
+                                  'lpt3', 'lpt4', 'lpt5', 'lpt6', 'lpt7', 'lpt8', 'lpt9']
+
+        try:
+            # 遍历代码目录
+            for root, dirs, files in os.walk(code_path):
+                # 跳过 .git 目录
+                if '.git' in dirs:
+                    dirs.remove('.git')
+
+                # 跳过常见的虚拟环境和依赖目录
+                skip_dirs = {'node_modules', 'venv', '.venv', 'env', '__pycache__', 'dist', 'build'}
+                dirs[:] = [d for d in dirs if d not in skip_dirs]
+
+                # 检查并删除临时文件
+                for file in files:
+                    file_lower = file.lower()
+
+                    # 1. Windows 保留设备名
+                    if file_lower in windows_reserved_names:
+                        file_path = os.path.join(root, file)
+                        try:
+                            os.remove(file_path)
+                            deleted_files.append(file_path)
+                            self.log("INFO", f"已删除 Windows 保留设备名文件: {file_path}")
+                        except Exception as e:
+                            self.log("WARN", f"无法删除 {file_path}: {str(e)}")
+
+                    # 2. 常见的临时文件模式
+                    temp_patterns = ['~$', '.tmp', '.temp', '.bak', '.swp', '.DS_Store',
+                                   'Thumbs.db', '.log', '.cache']
+
+                    if any(file_lower.endswith(pattern) for pattern in temp_patterns):
+                        file_path = os.path.join(root, file)
+                        try:
+                            os.remove(file_path)
+                            deleted_files.append(file_path)
+                            self.log("DEBUG", f"已删除临时文件: {file_path}")
+                        except Exception as e:
+                            self.log("DEBUG", f"无法删除临时文件 {file_path}: {str(e)}")
+
+        except Exception as e:
+            self.log("WARN", f"清理临时文件时出错: {str(e)}")
+
+        return deleted_files
+
     def execute_git_operations(self, repo_url, commit_msg, code_path, enable_security_check=True, target_branch="main"):
         """执行 Git 操作"""
         try:
             self.set_loading(True)
             self.log("INFO", "开始执行 Git 提交操作")
+
+            # 步骤0: 清理临时文件
+            self.update_status("正在清理临时文件...", "#0066cc")
+            self.log("INFO", "执行: 清理临时文件")
+            deleted_files = self.cleanup_temp_files(code_path)
+            if deleted_files:
+                self.log("INFO", f"已清理 {len(deleted_files)} 个临时文件")
+            else:
+                self.log("INFO", "没有需要清理的临时文件")
 
             # 步骤1: 安全检查（如果启用）
             if enable_security_check:
@@ -423,8 +492,8 @@ class GitGuiApp:
                     elif "warning:" in error_output.lower():
                         # 警告信息，记录但不抛出异常
                         self.log("DEBUG", f"警告: {error_output}")
-                    elif "fatal:" in error_output or ("error:" in error_output.lower() and "error: short read" not in error_output.lower()):
-                        # 只处理真正的错误（忽略 nul 相关错误）
+                    elif "fatal:" in error_output or "error:" in error_output.lower():
+                        # 处理所有致命错误和错误（除了 warning）
                         raise Exception(f"Git 命令失败: {error_output}")
 
             # 步骤3: 检查远程分支是否存在
