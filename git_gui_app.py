@@ -191,8 +191,8 @@ class GitGuiApp:
 
         self.code_path = ttk.Entry(path_frame, width=40)
         self.code_path.grid(row=0, column=0, sticky=(tk.W, tk.E), padx=(0, 5))
-        # 设置默认路径为当前目录
-        default_path = str(Path(__file__).parent)
+        # 设置默认路径
+        default_path = r"C:\D\CAIE_tool\MyAIProduct\gitTool"
         self.code_path.insert(0, default_path)
 
         browse_btn = ttk.Button(path_frame, text="📁 浏览",
