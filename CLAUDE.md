@@ -27,6 +27,7 @@ The application follows a classic Tkinter MVC pattern:
    - Removes common temporary files (*.tmp, *.bak, *.swp, Thumbs.db, .DS_Store, etc.)
    - Skips sensitive directories (.git, node_modules, venv, __pycache__, etc.)
    - Logs all deleted files for transparency
+   - **NEW**: If a file cannot be deleted (e.g., system-protected), automatically adds it to `.gitignore`
    - Prevents "short read" errors and false success reports
 
 3. **Security Layer** - `scan_for_sensitive_data()` method:
@@ -225,6 +226,7 @@ Edit `scan_for_sensitive_data()` method (line 433), modify the `patterns` dictio
   - Removes Windows reserved device names (nul, con, prn, aux, com*, lpt*)
   - Removes common temp files (*.tmp, *.bak, *.swp, Thumbs.db, etc.)
   - Prevents "short read" errors caused by conflicting filenames
+  - **BONUS**: If a file cannot be deleted, automatically adds it to `.gitignore`
 - **FIXED**: Improved error detection logic
   - Now properly catches all `fatal:` and `error:` messages
   - Eliminates false success reports

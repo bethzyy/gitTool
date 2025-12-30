@@ -391,7 +391,10 @@ class GitGuiApp:
                             deleted_files.append(file_path)
                             self.log("INFO", f"已删除 Windows 保留设备名文件: {file_path}")
                         except Exception as e:
+                            # 如果无法删除,添加到 .gitignore
                             self.log("WARN", f"无法删除 {file_path}: {str(e)}")
+                            self._add_to_gitignore(code_path, file)
+                            self.log("INFO", f"已将 {file} 添加到 .gitignore")
 
                     # 2. 常见的临时文件模式
                     temp_patterns = ['~$', '.tmp', '.temp', '.bak', '.swp', '.DS_Store',
@@ -410,6 +413,33 @@ class GitGuiApp:
             self.log("WARN", f"清理临时文件时出错: {str(e)}")
 
         return deleted_files
+
+    def _add_to_gitignore(self, code_path, filename):
+        """将文件添加到 .gitignore
+
+        Args:
+            code_path: 代码路径
+            filename: 要忽略的文件名
+        """
+        import os
+        gitignore_path = os.path.join(code_path, '.gitignore')
+
+        try:
+            # 读取现有的 .gitignore 内容
+            existing_entries = set()
+            if os.path.exists(gitignore_path):
+                with open(gitignore_path, 'r', encoding='utf-8') as f:
+                    existing_entries = set(line.strip() for line in f if line.strip())
+
+            # 如果文件名不在 .gitignore 中,添加它
+            if filename not in existing_entries:
+                with open(gitignore_path, 'a', encoding='utf-8') as f:
+                    # 如果文件不为空且最后一行没有换行符,先添加换行
+                    if os.path.getsize(gitignore_path) > 0:
+                        f.write('\n')
+                    f.write(f'{filename}\n')
+        except Exception as e:
+            self.log("DEBUG", f"更新 .gitignore 失败: {str(e)}")
 
     def execute_git_operations(self, repo_url, commit_msg, code_path, enable_security_check=True, target_branch="main"):
         """执行 Git 操作"""
