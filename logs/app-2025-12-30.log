@@ -87,3 +87,26 @@ error: failed to push some refs to 'github.com:bethzyy/gitTool.git'
 [2025-12-30 09:00:34] [DEBUG] .git
 [2025-12-30 09:00:34] [INFO] 执行: 添加文件
 [2025-12-30 09:00:34] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git add .
+[2025-12-30 09:00:34] [INFO] 执行: 提交更改
+[2025-12-30 09:00:34] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git commit -m "beautify GUI and add git command list to log."
+[2025-12-30 09:00:35] [DEBUG] [master d29d0ed] beautify GUI and add git command list to log.
+ 3 files changed, 201 insertions(+), 73 deletions(-)
+[2025-12-30 09:00:35] [INFO] 执行: 添加远程仓库
+[2025-12-30 09:00:35] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git remote add origin git@github.com:bethzyy/gitTool.git 2>nul || git remote set-url origin git@github.com:bethzyy/gitTool.git
+[2025-12-30 09:00:35] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git rev-parse --abbrev-ref HEAD
+[2025-12-30 09:00:35] [INFO] 当前分支: master
+[2025-12-30 09:00:35] [INFO] 执行: 推送到 GitHub
+[2025-12-30 09:00:35] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git push -u origin master
+[2025-12-30 09:00:39] [DEBUG] branch 'master' set up to track 'origin/master'.
+[2025-12-30 09:00:39] [INFO] Git 操作成功完成
+[2025-12-30 09:05:13] [INFO] 开始执行 Git 提交操作
+[2025-12-30 09:05:13] [INFO] 执行安全检查...
+[2025-12-30 09:05:28] [WARN] 发现 1 个安全问题
+[2025-12-30 09:05:46] [INFO] 开始执行 Git 提交操作
+[2025-12-30 09:05:46] [INFO] 执行安全检查...
+[2025-12-30 09:05:46] [INFO] 安全检查通过
+[2025-12-30 09:05:46] [INFO] 执行: 检查 Git 仓库
+[2025-12-30 09:05:46] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git rev-parse --git-dir 2>nul || git init
+[2025-12-30 09:05:46] [DEBUG] .git
+[2025-12-30 09:05:46] [INFO] 执行: 添加文件
+[2025-12-30 09:05:46] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git add .
