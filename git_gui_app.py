@@ -18,7 +18,7 @@ class GitGuiApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Git GUI 提交工具")
-        self.root.geometry("600x700")
+        self.root.geometry("550x650")
         self.root.resizable(True, True)
 
         # 设置样式
@@ -136,9 +136,9 @@ class GitGuiApp:
         ttk.Label(main_frame, text="提交信息:",
                  style='Label.TLabel').grid(row=row, column=0, sticky=tk.W, pady=5)
         row += 1
-        self.commit_msg = tk.Text(main_frame, width=50, height=4, wrap=tk.WORD)
+        self.commit_msg = ttk.Entry(main_frame, width=50)
         self.commit_msg.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=5)
-        self.commit_msg.insert("1.0", "Version")  # 默认值
+        self.commit_msg.insert(0, "Version")  # 默认值
         row += 1
 
         # 代码路径
@@ -178,7 +178,7 @@ class GitGuiApp:
 
         # 进度条
         self.progress = ttk.Progressbar(main_frame, mode='indeterminate')
-        self.progress.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 10))
+        self.progress.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 3))
         row += 1
 
         # 状态标签
@@ -186,7 +186,7 @@ class GitGuiApp:
                                     font=('Microsoft YaHei UI', 9),
                                     fg='#5a6c7d',
                                     bg='#f5f6fa')
-        self.status_label.grid(row=row, column=0, columnspan=3, pady=5)
+        self.status_label.grid(row=row, column=0, columnspan=3, pady=2)
         row += 1
 
         # 日志输出区域
@@ -194,7 +194,7 @@ class GitGuiApp:
                             font=('Microsoft YaHei UI', 10, 'bold'),
                             fg='#2c3e50',
                             bg='#f5f6fa')
-        log_label.grid(row=row, column=0, sticky=tk.W, pady=(15, 8))
+        log_label.grid(row=row, column=0, sticky=tk.W, pady=(8, 5))
         row += 1
 
         # 创建日志框容器
@@ -213,7 +213,8 @@ class GitGuiApp:
                                                     relief='flat',
                                                     borderwidth=0,
                                                     padx=10,
-                                                    pady=8)
+                                                    pady=8,
+                                                    state=tk.DISABLED)  # 初始设置为只读
         self.log_output.pack(fill=tk.BOTH, expand=True)
 
     def browse_folder(self):
@@ -243,9 +244,15 @@ class GitGuiApp:
 
     def log_message(self, message):
         """在日志区域显示消息"""
-        self.log_output.insert(tk.END, message + '\n')
-        self.log_output.see(tk.END)
-        self.root.update_idletasks()
+        try:
+            self.log_output.config(state=tk.NORMAL)
+            self.log_output.insert(tk.END, message + '\n')
+            self.log_output.config(state=tk.DISABLED)
+            self.log_output.see(tk.END)
+            self.log_output.update_idletasks()
+        except Exception as e:
+            # 如果界面还未准备好，打印到控制台
+            print(message)
 
     def update_status(self, message, color='#555'):
         """更新状态标签"""
@@ -265,7 +272,7 @@ class GitGuiApp:
         """提交按钮点击事件"""
         # 获取输入
         repo_name = self.repo_name.get().strip()
-        commit_msg = self.commit_msg.get("1.0", tk.END).strip()
+        commit_msg = self.commit_msg.get().strip()
         code_path = self.code_path.get().strip()
 
         # 验证输入
@@ -335,10 +342,10 @@ class GitGuiApp:
 
             # 步骤2: 执行 Git 命令
             commands = [
-                ('检查 Git 仓库', f'cd "{code_path}" && git rev-parse --git-dir 2>nul || git init'),
+                ('检查 Git 仓库', f'cd "{code_path}" && (git rev-parse --git-dir >nul 2>&1 || git init)'),
                 ('添加文件', f'cd "{code_path}" && git add .'),
                 ('提交更改', f'cd "{code_path}" && git commit -m "{commit_msg}"'),
-                ('添加远程仓库', f'cd "{code_path}" && git remote add origin {repo_url} 2>nul || git remote set-url origin {repo_url}'),
+                ('添加远程仓库', f'cd "{code_path}" && (git remote add origin {repo_url} >nul 2>&1 || git remote set-url origin {repo_url} >nul 2>&1)'),
             ]
 
             # 执行前面的命令
@@ -359,14 +366,18 @@ class GitGuiApp:
 
                 if result.stderr:
                     error_output = result.stderr.strip()
-                    # 忽略某些警告
+                    # 忽略某些警告和信息
                     if "nothing to commit" in error_output.lower():
                         self.log("INFO", "没有新的更改需要提交")
                         messagebox.showinfo("提示", "没有新的更改需要提交")
                         self.set_loading(False)
                         self.update_status("完成", "#009900")
                         return
-                    elif "fatal:" in error_output or "error:" in error_output.lower():
+                    elif "warning:" in error_output.lower():
+                        # 警告信息，记录但不抛出异常
+                        self.log("DEBUG", f"警告: {error_output}")
+                    elif "fatal:" in error_output or ("error:" in error_output.lower() and "error: short read" not in error_output.lower()):
+                        # 只处理真正的错误（忽略 nul 相关错误）
                         raise Exception(f"Git 命令失败: {error_output}")
 
             # 在提交后获取当前分支名
@@ -399,7 +410,10 @@ class GitGuiApp:
 
             if result.stderr:
                 error_output = result.stderr.strip()
-                if "fatal:" in error_output or "error:" in error_output.lower():
+                # 忽略警告，只处理真正的错误
+                if "warning:" in error_output.lower():
+                    self.log("DEBUG", f"警告: {error_output}")
+                elif "fatal:" in error_output or ("error:" in error_output.lower() and "short read" not in error_output.lower()):
                     raise Exception(f"Git 命令失败: {error_output}")
 
             # 成功
