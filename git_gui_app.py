@@ -18,7 +18,7 @@ class GitGuiApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Git GUI 提交工具")
-        self.root.geometry("550x720")
+        self.root.geometry("550x600")
         self.root.resizable(True, True)
 
         # 设置样式
@@ -117,7 +117,7 @@ class GitGuiApp:
 
         # 标题 - 居中显示
         title_frame = ttk.Frame(main_frame)
-        title_frame.grid(row=row, column=0, columnspan=3, pady=(0, 25))
+        title_frame.grid(row=row, column=0, columnspan=3, pady=(0, 12))
         title = ttk.Label(title_frame, text="🚀 Git GUI 提交工具",
                          style='Title.TLabel')
         title.pack()
@@ -128,20 +128,20 @@ class GitGuiApp:
 
         # Git 仓库名称
         ttk.Label(main_frame, text="仓库名称:",
-                 style='Label.TLabel').grid(row=row, column=0, sticky=tk.W, pady=5)
+                 style='Label.TLabel').grid(row=row, column=0, sticky=tk.W, pady=3)
         row += 1
         self.repo_name = ttk.Entry(main_frame, width=50)
-        self.repo_name.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(5, 2))
+        self.repo_name.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(3, 2))
         self.repo_name.insert(0, "")
         row += 1
 
         # 推送分支选择（紧跟在仓库名称下面）
         ttk.Label(main_frame, text="推送分支:",
-                 style='Label.TLabel').grid(row=row, column=0, sticky=tk.W, pady=(2, 5))
+                 style='Label.TLabel').grid(row=row, column=0, sticky=tk.W, pady=(2, 3))
 
         # 创建分支选择框架
         branch_frame = ttk.Frame(main_frame)
-        branch_frame.grid(row=row, column=1, columnspan=2, sticky=(tk.W, tk.E), pady=(2, 5))
+        branch_frame.grid(row=row, column=1, columnspan=2, sticky=(tk.W, tk.E), pady=(2, 3))
 
         # 单选按钮变量
         self.branch_var = tk.StringVar(value="main")  # 默认为 main
@@ -166,27 +166,27 @@ class GitGuiApp:
 
         # 分隔线（视觉分隔）
         separator = ttk.Separator(main_frame, orient='horizontal')
-        separator.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(10, 15))
+        separator.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(8, 10))
         row += 1
 
         # === 其他配置区域 ===
 
         # 提交信息
         ttk.Label(main_frame, text="提交信息:",
-                 style='Label.TLabel').grid(row=row, column=0, sticky=tk.W, pady=5)
+                 style='Label.TLabel').grid(row=row, column=0, sticky=tk.W, pady=3)
         row += 1
         self.commit_msg = ttk.Entry(main_frame, width=50)
-        self.commit_msg.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=5)
+        self.commit_msg.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=3)
         self.commit_msg.insert(0, "Version")  # 默认值
         row += 1
 
         # 代码路径
         ttk.Label(main_frame, text="代码路径:",
-                 style='Label.TLabel').grid(row=row, column=0, sticky=tk.W, pady=5)
+                 style='Label.TLabel').grid(row=row, column=0, sticky=tk.W, pady=3)
         row += 1
 
         path_frame = ttk.Frame(main_frame)
-        path_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=5)
+        path_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=3)
         path_frame.columnconfigure(0, weight=1)
 
         self.code_path = ttk.Entry(path_frame, width=40)
@@ -201,23 +201,21 @@ class GitGuiApp:
         browse_btn.grid(row=0, column=1)
         row += 1
 
-        # 安全分析选项
+        # 安全分析选项和提交按钮放在同一行
         self.security_check_var = tk.BooleanVar(value=True)  # 默认选中
         security_check = ttk.Checkbutton(main_frame, text="提交前进行安全分析（检查API密钥等敏感信息）",
                                         variable=self.security_check_var)
-        security_check.grid(row=row, column=0, columnspan=3, sticky=tk.W, pady=10)
-        row += 1
+        security_check.grid(row=row, column=0, columnspan=2, sticky=tk.W, pady=(10, 5))
 
-        # 提交按钮
-        self.submit_btn = ttk.Button(main_frame, text="📤 提交到 GitHub",
+        self.submit_btn = ttk.Button(main_frame, text="📤 提交",
                                     style='Submit.TButton',
                                     command=self.on_submit)
-        self.submit_btn.grid(row=row, column=0, columnspan=3, pady=(15, 25))
+        self.submit_btn.grid(row=row, column=2, pady=(10, 5))
         row += 1
 
         # 进度条
         self.progress = ttk.Progressbar(main_frame, mode='indeterminate')
-        self.progress.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 3))
+        self.progress.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 2))
         row += 1
 
         # 状态标签
@@ -233,17 +231,17 @@ class GitGuiApp:
                             font=('Microsoft YaHei UI', 10, 'bold'),
                             fg='#2c3e50',
                             bg='#f5f6fa')
-        log_label.grid(row=row, column=0, sticky=tk.W, pady=(8, 5))
+        log_label.grid(row=row, column=0, sticky=tk.W, pady=(5, 3))
         row += 1
 
         # 创建日志框容器
         log_frame = tk.Frame(main_frame, bg='white', relief='solid', borderwidth=1)
-        log_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 5))
+        log_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 0))
         main_frame.rowconfigure(row, weight=1)
 
         self.log_output = scrolledtext.ScrolledText(log_frame,
                                                     width=60,
-                                                    height=15,
+                                                    height=12,
                                                     wrap=tk.WORD,
                                                     font=('Consolas', 9),
                                                     bg='#fafbfc',
