@@ -18,7 +18,7 @@ class GitGuiApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Git GUI 提交工具")
-        self.root.geometry("550x650")
+        self.root.geometry("550x720")
         self.root.resizable(True, True)
 
         # 设置样式
@@ -123,14 +123,53 @@ class GitGuiApp:
         title.pack()
         row += 1
 
+        # === GitHub 仓库配置区域 ===
+        # 仓库名称和推送分支放在一个区域内
+
         # Git 仓库名称
         ttk.Label(main_frame, text="仓库名称:",
                  style='Label.TLabel').grid(row=row, column=0, sticky=tk.W, pady=5)
         row += 1
         self.repo_name = ttk.Entry(main_frame, width=50)
-        self.repo_name.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=5)
+        self.repo_name.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(5, 2))
         self.repo_name.insert(0, "")
         row += 1
+
+        # 推送分支选择（紧跟在仓库名称下面）
+        ttk.Label(main_frame, text="推送分支:",
+                 style='Label.TLabel').grid(row=row, column=0, sticky=tk.W, pady=(2, 5))
+
+        # 创建分支选择框架
+        branch_frame = ttk.Frame(main_frame)
+        branch_frame.grid(row=row, column=1, columnspan=2, sticky=(tk.W, tk.E), pady=(2, 5))
+
+        # 单选按钮变量
+        self.branch_var = tk.StringVar(value="main")  # 默认为 main
+
+        # Main 选项
+        main_radio = ttk.Radiobutton(branch_frame, text="main", variable=self.branch_var, value="main")
+        main_radio.grid(row=0, column=0, padx=(0, 10))
+
+        # Master 选项
+        master_radio = ttk.Radiobutton(branch_frame, text="master", variable=self.branch_var, value="master")
+        master_radio.grid(row=0, column=1, padx=(0, 10))
+
+        # 自定义分支选项
+        custom_radio = ttk.Radiobutton(branch_frame, text="自定义:", variable=self.branch_var, value="custom")
+        custom_radio.grid(row=0, column=2, padx=(0, 5))
+
+        # 自定义分支名输入框
+        self.custom_branch = ttk.Entry(branch_frame, width=20)
+        self.custom_branch.grid(row=0, column=3, sticky=(tk.W, tk.E))
+
+        row += 1
+
+        # 分隔线（视觉分隔）
+        separator = ttk.Separator(main_frame, orient='horizontal')
+        separator.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(10, 15))
+        row += 1
+
+        # === 其他配置区域 ===
 
         # 提交信息
         ttk.Label(main_frame, text="提交信息:",
@@ -275,6 +314,16 @@ class GitGuiApp:
         commit_msg = self.commit_msg.get().strip()
         code_path = self.code_path.get().strip()
 
+        # 获取推送分支
+        branch_selection = self.branch_var.get()
+        if branch_selection == "custom":
+            target_branch = self.custom_branch.get().strip()
+            if not target_branch:
+                messagebox.showerror("错误", "请输入自定义分支名")
+                return
+        else:
+            target_branch = branch_selection
+
         # 验证输入
         if not repo_name:
             messagebox.showerror("错误", "请输入仓库名称")
@@ -300,11 +349,11 @@ class GitGuiApp:
 
         # 在新线程中执行
         thread = threading.Thread(target=self.execute_git_operations,
-                                 args=(repo_url, commit_msg, code_path, enable_security_check))
+                                 args=(repo_url, commit_msg, code_path, enable_security_check, target_branch))
         thread.daemon = True
         thread.start()
 
-    def execute_git_operations(self, repo_url, commit_msg, code_path, enable_security_check=True):
+    def execute_git_operations(self, repo_url, commit_msg, code_path, enable_security_check=True, target_branch="main"):
         """执行 Git 操作"""
         try:
             self.set_loading(True)
@@ -380,9 +429,43 @@ class GitGuiApp:
                         # 只处理真正的错误（忽略 nul 相关错误）
                         raise Exception(f"Git 命令失败: {error_output}")
 
-            # 在提交后获取当前分支名
+            # 步骤3: 检查远程分支是否存在
+            self.update_status("正在检查远程分支...", "#0066cc")
+            self.log("INFO", f"检查远程分支 '{target_branch}' 是否存在")
+
+            # 先确保远程仓库信息是最新的
+            fetch_cmd = f'cd "{code_path}" && git fetch origin'
+            self.log("COMMAND", f"$ {fetch_cmd}")
+            fetch_result = subprocess.run(fetch_cmd,
+                                         shell=True,
+                                         capture_output=True,
+                                         text=True,
+                                         encoding='utf-8',
+                                         errors='replace')
+
+            # 检查远程分支是否存在
+            check_branch_cmd = f'cd "{code_path}" && git rev-parse --verify origin/{target_branch}'
+            self.log("COMMAND", f"$ {check_branch_cmd}")
+            check_result = subprocess.run(check_branch_cmd,
+                                        shell=True,
+                                        capture_output=True,
+                                        text=True,
+                                        encoding='utf-8',
+                                        errors='replace')
+
+            if check_result.returncode != 0:
+                # 远程分支不存在
+                error_msg = f"远程仓库中不存在分支 '{target_branch}'。请先在远程仓库创建该分支，或选择其他分支。"
+                self.log("ERROR", error_msg)
+                self.update_status("远程分支不存在", "#cc0000")
+                messagebox.showerror("错误", error_msg)
+                return
+
+            self.log("INFO", f"远程分支 '{target_branch}' 存在")
+
+            # 获取当前分支名
             get_branch_cmd = f'cd "{code_path}" && git rev-parse --abbrev-ref HEAD'
-            self.log("COMMAND", f"$ {get_branch_cmd}")  # 显示命令
+            self.log("COMMAND", f"$ {get_branch_cmd}")
             branch_result = subprocess.run(get_branch_cmd,
                                          shell=True,
                                          capture_output=True,
@@ -390,13 +473,13 @@ class GitGuiApp:
                                          encoding='utf-8',
                                          errors='replace')
             current_branch = branch_result.stdout.strip() or "master"
-            self.log("INFO", f"当前分支: {current_branch}")
+            self.log("INFO", f"当前本地分支: {current_branch}")
 
-            # 推送到远程仓库
-            push_cmd = f'cd "{code_path}" && git push -u origin {current_branch}'
-            self.log("INFO", "执行: 推送到 GitHub")
-            self.log("COMMAND", f"$ {push_cmd}")  # 显示命令
-            self.update_status("正在推送到 GitHub...", "#0066cc")
+            # 步骤4: 推送到远程仓库的指定分支
+            push_cmd = f'cd "{code_path}" && git push -u origin {current_branch}:{target_branch}'
+            self.log("INFO", f"执行: 推送到远程分支 '{target_branch}'")
+            self.log("COMMAND", f"$ {push_cmd}")
+            self.update_status(f"正在推送到 {target_branch} 分支...", "#0066cc")
 
             result = subprocess.run(push_cmd,
                                   shell=True,
