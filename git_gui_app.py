@@ -35,18 +35,18 @@ class GitGuiApp:
             base_dir = os.path.dirname(os.path.abspath(__file__))
         self.config_file = os.path.join(base_dir, 'user_config.json')
 
+        # 日志文件 (必须在 load_config 之前初始化)
+        self.log_dir = Path(base_dir) / "logs"
+        self.log_dir.mkdir(exist_ok=True)
+        self.log_file = self.log_dir / f"app-{datetime.date.today().isoformat()}.log"
+
         # 设置样式
         self.setup_styles()
 
         # 创建界面
         self.create_widgets()
 
-        # 日志文件
-        self.log_dir = Path(base_dir) / "logs"
-        self.log_dir.mkdir(exist_ok=True)
-        self.log_file = self.log_dir / f"app-{datetime.date.today().isoformat()}.log"
-
-        # 加载保存的配置
+        # 加载保存的配置 (现在 log_file 已经初始化了)
         self.load_config()
 
         self.log("INFO", f"应用程序启动 (配置文件: {self.config_file})")
@@ -291,54 +291,91 @@ class GitGuiApp:
                 'last_saved': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
 
+            # 记录详细的参数信息
+            self.log("INFO", f"[配置保存] 准备保存配置到: {self.config_file}")
+            self.log("INFO", f"[配置保存] 仓库名称: {config['repo_name']}")
+            self.log("INFO", f"[配置保存] 提交信息: {config['commit_msg']}")
+            self.log("INFO", f"[配置保存] 代码路径: {config['code_path']}")
+            self.log("INFO", f"[配置保存] 分支选择: {config['branch_selection']}")
+            self.log("INFO", f"[配置保存] 自定义分支: {config['custom_branch']}")
+            self.log("INFO", f"[配置保存] 安全检查: {config['security_check']}")
+
             with open(self.config_file, 'w', encoding='utf-8') as f:
                 json.dump(config, f, ensure_ascii=False, indent=2)
 
-            self.log("DEBUG", "配置已自动保存")
+            self.log("INFO", f"[配置保存] 配置保存成功")
         except Exception as e:
-            self.log("WARN", f"保存配置失败: {str(e)}")
+            self.log("ERROR", f"[配置保存] 配置保存失败: {str(e)}")
+            import traceback
+            self.log("ERROR", f"[配置保存] 错误详情: {traceback.format_exc()}")
 
     def load_config(self):
         """从配置文件加载参数"""
         try:
-            if not self.config_file.exists():
-                self.log("INFO", "未找到配置文件，使用默认值")
+            self.log("INFO", f"[配置加载] 配置文件路径: {self.config_file}")
+            self.log("INFO", f"[配置加载] 文件是否存在: {os.path.exists(self.config_file)}")
+
+            if not os.path.exists(self.config_file):
+                self.log("INFO", "[配置加载] 配置文件不存在，使用默认值")
                 return
 
             with open(self.config_file, 'r', encoding='utf-8') as f:
                 config = json.load(f)
 
+            self.log("INFO", f"[配置加载] 成功读取配置文件")
+            self.log("INFO", f"[配置加载] 上次保存时间: {config.get('last_saved', '未知')}")
+
             # 加载仓库名称
             if 'repo_name' in config and config['repo_name']:
                 self.repo_name.delete(0, tk.END)
                 self.repo_name.insert(0, config['repo_name'])
+                self.log("INFO", f"[配置加载] ✓ 仓库名称: {config['repo_name']}")
+            else:
+                self.log("DEBUG", "[配置加载] 仓库名称为空，跳过")
 
             # 加载提交信息
             if 'commit_msg' in config and config['commit_msg']:
                 self.commit_msg.delete(0, tk.END)
                 self.commit_msg.insert(0, config['commit_msg'])
+                self.log("INFO", f"[配置加载] ✓ 提交信息: {config['commit_msg']}")
+            else:
+                self.log("DEBUG", "[配置加载] 提交信息为空，跳过")
 
             # 加载代码路径
             if 'code_path' in config and config['code_path']:
                 self.code_path.delete(0, tk.END)
                 self.code_path.insert(0, config['code_path'])
+                self.log("INFO", f"[配置加载] ✓ 代码路径: {config['code_path']}")
+            else:
+                self.log("DEBUG", "[配置加载] 代码路径为空，跳过")
 
             # 加载分支选择
             if 'branch_selection' in config:
                 self.branch_var.set(config['branch_selection'])
+                self.log("INFO", f"[配置加载] ✓ 分支选择: {config['branch_selection']}")
+            else:
+                self.log("DEBUG", "[配置加载] 分支选择不存在，跳过")
 
             # 加载自定义分支名
             if 'custom_branch' in config and config['custom_branch']:
                 self.custom_branch.delete(0, tk.END)
                 self.custom_branch.insert(0, config['custom_branch'])
+                self.log("INFO", f"[配置加载] ✓ 自定义分支: {config['custom_branch']}")
+            else:
+                self.log("DEBUG", "[配置加载] 自定义分支为空，跳过")
 
             # 加载安全检查选项
             if 'security_check' in config:
                 self.security_check_var.set(config['security_check'])
+                self.log("INFO", f"[配置加载] ✓ 安全检查: {config['security_check']}")
+            else:
+                self.log("DEBUG", "[配置加载] 安全检查选项不存在，跳过")
 
-            self.log("INFO", f"配置已加载 (上次保存: {config.get('last_saved', '未知')})")
+            self.log("INFO", "[配置加载] ✓ 配置加载完成")
         except Exception as e:
-            self.log("WARN", f"加载配置失败: {str(e)}")
+            self.log("ERROR", f"[配置加载] 加载配置失败: {str(e)}")
+            import traceback
+            self.log("ERROR", f"[配置加载] 错误详情: {traceback.format_exc()}")
 
     def log(self, level, message, data=None):
         """记录日志"""

@@ -1,9 +1,9 @@
 {
-  "repo_name": "newYear",
-  "commit_msg": "1st",
+  "repo_name": "gitTool",
+  "commit_msg": "添加界面参数保存机制",
   "code_path": "C:\\D\\CAIE_tool\\MyAIProduct\\gitTool",
-  "branch_selection": "main",
+  "branch_selection": "master",
   "custom_branch": "",
   "security_check": true,
-  "last_saved": "2026-01-03 15:18:16"
+  "last_saved": "2026-01-03 15:31:55"
 }
