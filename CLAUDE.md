@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a **Git GUI Commit Tool** - a desktop application built with Python and Tkinter that simplifies Git workflows for GitHub repositories. It provides a user-friendly interface for committing and pushing code to GitHub with built-in security scanning to prevent sensitive data leaks.
 
-**Current Version**: v1.4.0
+**Current Version**: v1.6.0
 **Main File**: `git_gui_app.py`
 **Executable**: `dist/GitGUI提交工具.exe`
 
@@ -27,23 +27,34 @@ The application follows a classic Tkinter MVC pattern:
    - Removes common temporary files (*.tmp, *.bak, *.swp, Thumbs.db, .DS_Store, etc.)
    - Skips sensitive directories (.git, node_modules, venv, __pycache__, etc.)
    - Logs all deleted files for transparency
-   - **NEW**: If a file cannot be deleted (e.g., system-protected), automatically adds it to `.gitignore`
+   - If a file cannot be deleted (e.g., system-protected), automatically adds it to `.gitignore`
    - Prevents "short read" errors and false success reports
 
-3. **Security Layer** - `scan_for_sensitive_data()` method:
+3. **Configuration Layer** - `save_config()` and `load_config()` methods:
+   - Automatically saves user parameters on submit and window close
+   - Loads saved parameters on startup
+   - Saves to `user_config.json` in exe directory (handles PyInstaller paths correctly)
+   - Detailed logging of all saved/loaded parameters for debugging
+
+4. **.gitignore Management** - `ensure_gitignore_exists()` method:
+   - Checks if project has `.gitignore` before Git operations
+   - If exists: **keeps it completely unchanged** (respects user configuration)
+   - If missing: creates new `.gitignore` with common rules including `*.exe`
+   - Runs between cleanup and security check phases
+
+5. **Security Layer** - `scan_for_sensitive_data()` method:
    - Scans code files before commit for sensitive information (API keys, passwords, tokens, private keys)
    - Uses regex patterns to detect common secrets
    - Excludes common directories (node_modules, .git, venv, etc.)
    - Filters out false positives (example values, regex definitions)
 
-4. **Git Operations** - `execute_git_operations()` method:
+6. **Git Operations** - `execute_git_operations()` method:
    - Validates inputs
-   - **NEW: Automatically cleans temp files before Git operations**
-   - Performs security checks (optional but enabled by default)
-   - Executes Git commands: init → add → commit → push
+   - Execution order: cleanup → ensure .gitignore → security check → Git init/add/commit → remote setup → branch check → push
    - Checks if remote branch exists before pushing
+   - **NEW**: If remote branch doesn't exist, asks user whether to create it
    - Supports pushing to different remote branches (main/master/custom)
-   - **FIXED: Properly detects and reports Git errors (no more false success)**
+   - Properly detects and reports Git errors (no more false success)
 
 ### Remote Branch Selection
 
@@ -55,20 +66,36 @@ The tool provides three options for remote push branch:
 Before pushing, the tool:
 1. Fetches latest remote info (`git fetch origin`)
 2. Verifies the remote branch exists (`git rev-parse --verify origin/{branch}`)
-3. If branch doesn't exist, shows error and terminates
-4. Pushes using format: `git push -u origin {local_branch}:{remote_branch}`
+3. **NEW**: If branch doesn't exist, asks user whether to create it via `messagebox.askyesno()`
+4. If user confirms: `git push -u origin {local_branch}:{remote_branch}` creates new branch automatically
+5. If user cancels: operation terminates
 
 ### Configuration
 
-**GitHub Username**: Hardcoded as `bethzyy` in `on_submit()` method (line 296):
+**GitHub Username**: Hardcoded as `bethzyy` in `on_submit()` method (line ~462):
 ```python
 repo_url = f"git@github.com:bethzyy/{repo_name}.git"
 ```
 To change for different users, modify this value.
 
+**User Configuration**:
+- Saved to `user_config.json` in same directory as exe (handles PyInstaller paths via `sys.frozen` check)
+- Saved on: submit button click and window close
+- Loaded on: application startup (after log file initialization)
+- Contains: repo_name, commit_msg, code_path, branch_selection, custom_branch, security_check
+- Detailed logging with `[配置保存]` and `[配置加载]` prefixes
+
 **Default Code Path**: Set to `C:\D\CAIE_tool\MyAIProduct\gitTool`
 
 **Default Branch**: `main`
+
+**Initialization Order** (critical for config loading):
+1. Setup paths and config_file location (checks `sys.frozen` for PyInstaller)
+2. **Initialize log_file first** (must happen before load_config)
+3. Setup styles
+4. Create widgets
+5. Load config (now log_file is available)
+6. Log startup message
 
 ## Build & Development Commands
 
@@ -149,6 +176,8 @@ thread.start()
 - **GUI logging**: Displays in scrolled text area
 - **Log levels**: INFO, DEBUG, WARN, ERROR, COMMAND
 - All Git commands are logged with `COMMAND` level for transparency
+- Configuration operations use prefixes: `[配置保存]` and `[配置加载]`
+- Each parameter is logged individually with value for debugging
 
 ### Error Handling
 
@@ -217,21 +246,39 @@ Edit `scan_for_sensitive_data()` method (line 433), modify the `patterns` dictio
 1. **Windows-only**: The exe is built for Windows platforms
 2. **SSH-only**: Assumes SSH key authentication with GitHub
 3. **Single repository**: Uses hardcoded GitHub username
-4. **No branch creation**: Will not create remote branches if they don't exist
 
 ## Version History
+
+### v1.6.0 (2026-01-03)
+- **NEW**: Automatic .gitignore creation for new projects
+  - Creates `.gitignore` if project doesn't have one
+  - Includes `*.exe` and other common ignore rules
+  - **Important**: If `.gitignore` already exists, keeps it completely unchanged
+  - Respects user's existing configuration
+
+### v1.5.1 (2026-01-03)
+- **FIXED**: Configuration loading failure
+  - Adjusted initialization order: log_file now initialized before load_config
+  - Fixed path check: changed from `.exists()` to `os.path.exists()`
+- **IMPROVED**: Enhanced logging for configuration operations
+  - Detailed parameter logging for save/load operations
+  - Error stack traces for debugging
+
+### v1.5.0 (2026-01-03)
+- **NEW**: Automatic remote branch creation
+  - Asks user if they want to create non-existent remote branch
+  - Creates and pushes new branch automatically on confirmation
+  - Cancels operation if user declines
 
 ### v1.4.0 (2025-12-30)
 - **NEW**: Automatic temp file cleanup before Git operations
   - Removes Windows reserved device names (nul, con, prn, aux, com*, lpt*)
   - Removes common temp files (*.tmp, *.bak, *.swp, Thumbs.db, etc.)
   - Prevents "short read" errors caused by conflicting filenames
-  - **BONUS**: If a file cannot be deleted, automatically adds it to `.gitignore`
+  - If a file cannot be deleted, automatically adds it to `.gitignore`
 - **FIXED**: Improved error detection logic
   - Now properly catches all `fatal:` and `error:` messages
   - Eliminates false success reports
-  - Better user feedback on actual failures
-- **IMPROVED**: Better logging for cleanup operations
 
 ### v1.3.0 (Initial Release)
 - Basic Git GUI functionality

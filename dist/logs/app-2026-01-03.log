@@ -22,3 +22,82 @@
 [2026-01-03 15:41:06] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && (git rev-parse --git-dir >nul 2>&1 || git init)
 [2026-01-03 15:41:06] [INFO] 执行: 添加文件
 [2026-01-03 15:41:06] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git add .
+[2026-01-03 15:41:07] [DEBUG] 警告: warning: in the working copy of 'git_gui_app.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'gitignore_example.txt', LF will be replaced by CRLF the next time Git touches it
+[2026-01-03 15:41:07] [INFO] 执行: 提交更改
+[2026-01-03 15:41:07] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git commit -m "add .gitignore creation"
+[2026-01-03 15:41:07] [DEBUG] [master 39ef763] add .gitignore creation
+ 14 files changed, 5767 insertions(+), 5660 deletions(-)
+ create mode 100644 .gitignore
+ create mode 100644 gitignore_example.txt
+[2026-01-03 15:41:07] [INFO] 执行: 添加远程仓库
+[2026-01-03 15:41:07] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && (git remote add origin git@github.com:bethzyy/gitTool.git >nul 2>&1 || git remote set-url origin git@github.com:bethzyy/gitTool.git >nul 2>&1)
+[2026-01-03 15:41:07] [INFO] 检查远程分支 'master' 是否存在
+[2026-01-03 15:41:07] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git fetch origin
+[2026-01-03 15:41:12] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git rev-parse --verify origin/master
+[2026-01-03 15:41:12] [INFO] 远程分支 'master' 准备就绪
+[2026-01-03 15:41:12] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git rev-parse --abbrev-ref HEAD
+[2026-01-03 15:41:12] [INFO] 当前本地分支: master
+[2026-01-03 15:41:12] [INFO] 执行: 推送到远程分支 'master'
+[2026-01-03 15:41:12] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git push -u origin master:master
+[2026-01-03 15:41:21] [DEBUG] branch 'master' set up to track 'origin/master'.
+[2026-01-03 15:41:21] [INFO] Git 操作成功完成
+[2026-01-03 15:41:47] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 15:41:47] [INFO] [配置保存] 仓库名称: gitTool
+[2026-01-03 15:41:47] [INFO] [配置保存] 提交信息: add .gitignore creation
+[2026-01-03 15:41:47] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\gitTool
+[2026-01-03 15:41:47] [INFO] [配置保存] 分支选择: master
+[2026-01-03 15:41:47] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 15:41:47] [INFO] [配置保存] 安全检查: True
+[2026-01-03 15:41:47] [INFO] [配置保存] 配置保存成功
+[2026-01-03 15:44:21] [INFO] [配置加载] 配置文件路径: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 15:44:21] [INFO] [配置加载] 文件是否存在: True
+[2026-01-03 15:44:21] [INFO] [配置加载] 成功读取配置文件
+[2026-01-03 15:44:21] [INFO] [配置加载] 上次保存时间: 2026-01-03 15:41:47
+[2026-01-03 15:44:21] [INFO] [配置加载] ✓ 仓库名称: gitTool
+[2026-01-03 15:44:21] [INFO] [配置加载] ✓ 提交信息: add .gitignore creation
+[2026-01-03 15:44:21] [INFO] [配置加载] ✓ 代码路径: C:\D\CAIE_tool\MyAIProduct\gitTool
+[2026-01-03 15:44:21] [INFO] [配置加载] ✓ 分支选择: master
+[2026-01-03 15:44:21] [DEBUG] [配置加载] 自定义分支为空，跳过
+[2026-01-03 15:44:21] [INFO] [配置加载] ✓ 安全检查: True
+[2026-01-03 15:44:21] [INFO] [配置加载] ✓ 配置加载完成
+[2026-01-03 15:44:21] [INFO] 应用程序启动 (配置文件: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json)
+[2026-01-03 15:44:25] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 15:44:26] [INFO] [配置保存] 仓库名称: gitTool
+[2026-01-03 15:44:26] [INFO] [配置保存] 提交信息: add .gitignore creation
+[2026-01-03 15:44:26] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\gitTool
+[2026-01-03 15:44:26] [INFO] [配置保存] 分支选择: master
+[2026-01-03 15:44:26] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 15:44:26] [INFO] [配置保存] 安全检查: True
+[2026-01-03 15:44:26] [INFO] [配置保存] 配置保存成功
+[2026-01-03 15:52:15] [INFO] [配置加载] 配置文件路径: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 15:52:15] [INFO] [配置加载] 文件是否存在: True
+[2026-01-03 15:52:15] [INFO] [配置加载] 成功读取配置文件
+[2026-01-03 15:52:15] [INFO] [配置加载] 上次保存时间: 2026-01-03 15:44:25
+[2026-01-03 15:52:15] [INFO] [配置加载] ✓ 仓库名称: gitTool
+[2026-01-03 15:52:15] [INFO] [配置加载] ✓ 提交信息: add .gitignore creation
+[2026-01-03 15:52:15] [INFO] [配置加载] ✓ 代码路径: C:\D\CAIE_tool\MyAIProduct\gitTool
+[2026-01-03 15:52:15] [INFO] [配置加载] ✓ 分支选择: master
+[2026-01-03 15:52:15] [DEBUG] [配置加载] 自定义分支为空，跳过
+[2026-01-03 15:52:15] [INFO] [配置加载] ✓ 安全检查: True
+[2026-01-03 15:52:15] [INFO] [配置加载] ✓ 配置加载完成
+[2026-01-03 15:52:15] [INFO] 应用程序启动 (配置文件: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json)
+[2026-01-03 15:52:38] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 15:52:38] [INFO] [配置保存] 仓库名称: gitTool
+[2026-01-03 15:52:38] [INFO] [配置保存] 提交信息: update CLAUDE.md
+[2026-01-03 15:52:38] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\gitTool
+[2026-01-03 15:52:38] [INFO] [配置保存] 分支选择: master
+[2026-01-03 15:52:38] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 15:52:38] [INFO] [配置保存] 安全检查: True
+[2026-01-03 15:52:38] [INFO] [配置保存] 配置保存成功
+[2026-01-03 15:52:38] [INFO] 开始执行 Git 提交操作
+[2026-01-03 15:52:38] [INFO] 执行: 清理临时文件
+[2026-01-03 15:52:38] [INFO] 没有需要清理的临时文件
+[2026-01-03 15:52:38] [INFO] 执行: 检查/创建 .gitignore
+[2026-01-03 15:52:38] [INFO] ✓ .gitignore 已存在,保持不变: C:\D\CAIE_tool\MyAIProduct\gitTool\.gitignore
+[2026-01-03 15:52:38] [INFO] 执行安全检查...
+[2026-01-03 15:52:38] [INFO] 安全检查通过
+[2026-01-03 15:52:38] [INFO] 执行: 检查 Git 仓库
+[2026-01-03 15:52:38] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && (git rev-parse --git-dir >nul 2>&1 || git init)
+[2026-01-03 15:52:38] [INFO] 执行: 添加文件
+[2026-01-03 15:52:38] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git add .
