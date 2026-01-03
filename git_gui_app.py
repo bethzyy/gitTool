@@ -12,6 +12,7 @@ import os
 import re
 import threading
 import datetime
+import json
 from pathlib import Path
 
 class GitGuiApp:
@@ -21,11 +22,17 @@ class GitGuiApp:
         self.root.geometry("550x600")
         self.root.resizable(True, True)
 
+        # 配置文件路径
+        self.config_file = Path(__file__).parent / "user_config.json"
+
         # 设置样式
         self.setup_styles()
 
         # 创建界面
         self.create_widgets()
+
+        # 加载保存的配置
+        self.load_config()
 
         # 日志文件
         self.log_dir = Path(__file__).parent / "logs"
@@ -133,6 +140,8 @@ class GitGuiApp:
         self.repo_name = ttk.Entry(main_frame, width=50)
         self.repo_name.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(3, 2))
         self.repo_name.insert(0, "")
+        # 绑定事件: 当内容变化时自动保存
+        self.repo_name.bind('<KeyRelease>', lambda e: self.save_config())
         row += 1
 
         # 推送分支选择（紧跟在仓库名称下面）
@@ -147,20 +156,25 @@ class GitGuiApp:
         self.branch_var = tk.StringVar(value="main")  # 默认为 main
 
         # Main 选项
-        main_radio = ttk.Radiobutton(branch_frame, text="main", variable=self.branch_var, value="main")
+        main_radio = ttk.Radiobutton(branch_frame, text="main", variable=self.branch_var, value="main",
+                                    command=lambda: self.save_config())
         main_radio.grid(row=0, column=0, padx=(0, 10))
 
         # Master 选项
-        master_radio = ttk.Radiobutton(branch_frame, text="master", variable=self.branch_var, value="master")
+        master_radio = ttk.Radiobutton(branch_frame, text="master", variable=self.branch_var, value="master",
+                                      command=lambda: self.save_config())
         master_radio.grid(row=0, column=1, padx=(0, 10))
 
         # 自定义分支选项
-        custom_radio = ttk.Radiobutton(branch_frame, text="自定义:", variable=self.branch_var, value="custom")
+        custom_radio = ttk.Radiobutton(branch_frame, text="自定义:", variable=self.branch_var, value="custom",
+                                      command=lambda: self.save_config())
         custom_radio.grid(row=0, column=2, padx=(0, 5))
 
         # 自定义分支名输入框
         self.custom_branch = ttk.Entry(branch_frame, width=20)
         self.custom_branch.grid(row=0, column=3, sticky=(tk.W, tk.E))
+        # 绑定事件: 当内容变化时自动保存
+        self.custom_branch.bind('<KeyRelease>', lambda e: self.save_config())
 
         row += 1
 
@@ -178,6 +192,8 @@ class GitGuiApp:
         self.commit_msg = ttk.Entry(main_frame, width=50)
         self.commit_msg.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=3)
         self.commit_msg.insert(0, "Version")  # 默认值
+        # 绑定事件: 当内容变化时自动保存
+        self.commit_msg.bind('<KeyRelease>', lambda e: self.save_config())
         row += 1
 
         # 代码路径
@@ -204,7 +220,8 @@ class GitGuiApp:
         # 安全分析选项和提交按钮放在同一行
         self.security_check_var = tk.BooleanVar(value=True)  # 默认选中
         security_check = ttk.Checkbutton(main_frame, text="提交前进行安全分析（检查API密钥等敏感信息）",
-                                        variable=self.security_check_var)
+                                        variable=self.security_check_var,
+                                        command=lambda: self.save_config())
         security_check.grid(row=row, column=0, columnspan=2, sticky=tk.W, pady=(10, 5))
 
         self.submit_btn = ttk.Button(main_frame, text="📤 提交",
@@ -260,6 +277,70 @@ class GitGuiApp:
         if folder:
             self.code_path.delete(0, tk.END)
             self.code_path.insert(0, folder)
+            # 自动保存配置
+            self.save_config()
+
+    def save_config(self):
+        """保存当前界面参数到配置文件"""
+        try:
+            config = {
+                'repo_name': self.repo_name.get().strip(),
+                'commit_msg': self.commit_msg.get().strip(),
+                'code_path': self.code_path.get().strip(),
+                'branch_selection': self.branch_var.get(),
+                'custom_branch': self.custom_branch.get().strip(),
+                'security_check': self.security_check_var.get(),
+                'last_saved': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            }
+
+            with open(self.config_file, 'w', encoding='utf-8') as f:
+                json.dump(config, f, ensure_ascii=False, indent=2)
+
+            self.log("DEBUG", "配置已自动保存")
+        except Exception as e:
+            self.log("WARN", f"保存配置失败: {str(e)}")
+
+    def load_config(self):
+        """从配置文件加载参数"""
+        try:
+            if not self.config_file.exists():
+                self.log("INFO", "未找到配置文件，使用默认值")
+                return
+
+            with open(self.config_file, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+
+            # 加载仓库名称
+            if 'repo_name' in config and config['repo_name']:
+                self.repo_name.delete(0, tk.END)
+                self.repo_name.insert(0, config['repo_name'])
+
+            # 加载提交信息
+            if 'commit_msg' in config and config['commit_msg']:
+                self.commit_msg.delete(0, tk.END)
+                self.commit_msg.insert(0, config['commit_msg'])
+
+            # 加载代码路径
+            if 'code_path' in config and config['code_path']:
+                self.code_path.delete(0, tk.END)
+                self.code_path.insert(0, config['code_path'])
+
+            # 加载分支选择
+            if 'branch_selection' in config:
+                self.branch_var.set(config['branch_selection'])
+
+            # 加载自定义分支名
+            if 'custom_branch' in config and config['custom_branch']:
+                self.custom_branch.delete(0, tk.END)
+                self.custom_branch.insert(0, config['custom_branch'])
+
+            # 加载安全检查选项
+            if 'security_check' in config:
+                self.security_check_var.set(config['security_check'])
+
+            self.log("INFO", f"配置已加载 (上次保存: {config.get('last_saved', '未知')})")
+        except Exception as e:
+            self.log("WARN", f"加载配置失败: {str(e)}")
 
     def log(self, level, message, data=None):
         """记录日志"""
