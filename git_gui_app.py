@@ -9,6 +9,7 @@ import tkinter as tk
 from tkinter import ttk, scrolledtext, filedialog, messagebox
 import subprocess
 import os
+import sys
 import re
 import threading
 import datetime
@@ -22,8 +23,17 @@ class GitGuiApp:
         self.root.geometry("550x600")
         self.root.resizable(True, True)
 
-        # 配置文件路径
-        self.config_file = Path(__file__).parent / "user_config.json"
+        # 注册窗口关闭事件
+        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+        # 配置文件路径 - 正确处理PyInstaller打包后的路径
+        if getattr(sys, 'frozen', False):
+            # PyInstaller打包后的情况,使用EXE所在目录
+            base_dir = os.path.dirname(sys.executable)
+        else:
+            # 正常Python脚本运行
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+        self.config_file = os.path.join(base_dir, 'user_config.json')
 
         # 设置样式
         self.setup_styles()
@@ -31,15 +41,15 @@ class GitGuiApp:
         # 创建界面
         self.create_widgets()
 
-        # 加载保存的配置
-        self.load_config()
-
         # 日志文件
-        self.log_dir = Path(__file__).parent / "logs"
+        self.log_dir = Path(base_dir) / "logs"
         self.log_dir.mkdir(exist_ok=True)
         self.log_file = self.log_dir / f"app-{datetime.date.today().isoformat()}.log"
 
-        self.log("INFO", "应用程序启动")
+        # 加载保存的配置
+        self.load_config()
+
+        self.log("INFO", f"应用程序启动 (配置文件: {self.config_file})")
 
     def setup_styles(self):
         """设置界面样式"""
@@ -140,8 +150,6 @@ class GitGuiApp:
         self.repo_name = ttk.Entry(main_frame, width=50)
         self.repo_name.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(3, 2))
         self.repo_name.insert(0, "")
-        # 绑定事件: 当内容变化时自动保存
-        self.repo_name.bind('<KeyRelease>', lambda e: self.save_config())
         row += 1
 
         # 推送分支选择（紧跟在仓库名称下面）
@@ -156,25 +164,20 @@ class GitGuiApp:
         self.branch_var = tk.StringVar(value="main")  # 默认为 main
 
         # Main 选项
-        main_radio = ttk.Radiobutton(branch_frame, text="main", variable=self.branch_var, value="main",
-                                    command=lambda: self.save_config())
+        main_radio = ttk.Radiobutton(branch_frame, text="main", variable=self.branch_var, value="main")
         main_radio.grid(row=0, column=0, padx=(0, 10))
 
         # Master 选项
-        master_radio = ttk.Radiobutton(branch_frame, text="master", variable=self.branch_var, value="master",
-                                      command=lambda: self.save_config())
+        master_radio = ttk.Radiobutton(branch_frame, text="master", variable=self.branch_var, value="master")
         master_radio.grid(row=0, column=1, padx=(0, 10))
 
         # 自定义分支选项
-        custom_radio = ttk.Radiobutton(branch_frame, text="自定义:", variable=self.branch_var, value="custom",
-                                      command=lambda: self.save_config())
+        custom_radio = ttk.Radiobutton(branch_frame, text="自定义:", variable=self.branch_var, value="custom")
         custom_radio.grid(row=0, column=2, padx=(0, 5))
 
         # 自定义分支名输入框
         self.custom_branch = ttk.Entry(branch_frame, width=20)
         self.custom_branch.grid(row=0, column=3, sticky=(tk.W, tk.E))
-        # 绑定事件: 当内容变化时自动保存
-        self.custom_branch.bind('<KeyRelease>', lambda e: self.save_config())
 
         row += 1
 
@@ -192,8 +195,6 @@ class GitGuiApp:
         self.commit_msg = ttk.Entry(main_frame, width=50)
         self.commit_msg.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=3)
         self.commit_msg.insert(0, "Version")  # 默认值
-        # 绑定事件: 当内容变化时自动保存
-        self.commit_msg.bind('<KeyRelease>', lambda e: self.save_config())
         row += 1
 
         # 代码路径
@@ -220,8 +221,7 @@ class GitGuiApp:
         # 安全分析选项和提交按钮放在同一行
         self.security_check_var = tk.BooleanVar(value=True)  # 默认选中
         security_check = ttk.Checkbutton(main_frame, text="提交前进行安全分析（检查API密钥等敏感信息）",
-                                        variable=self.security_check_var,
-                                        command=lambda: self.save_config())
+                                        variable=self.security_check_var)
         security_check.grid(row=row, column=0, columnspan=2, sticky=tk.W, pady=(10, 5))
 
         self.submit_btn = ttk.Button(main_frame, text="📤 提交",
@@ -277,8 +277,6 @@ class GitGuiApp:
         if folder:
             self.code_path.delete(0, tk.END)
             self.code_path.insert(0, folder)
-            # 自动保存配置
-            self.save_config()
 
     def save_config(self):
         """保存当前界面参数到配置文件"""
@@ -388,6 +386,9 @@ class GitGuiApp:
 
     def on_submit(self):
         """提交按钮点击事件"""
+        # 保存当前参数
+        self.save_config()
+
         # 获取输入
         repo_name = self.repo_name.get().strip()
         commit_msg = self.commit_msg.get().strip()
@@ -632,14 +633,24 @@ class GitGuiApp:
                                         errors='replace')
 
             if check_result.returncode != 0:
-                # 远程分支不存在
-                error_msg = f"远程仓库中不存在分支 '{target_branch}'。请先在远程仓库创建该分支，或选择其他分支。"
-                self.log("ERROR", error_msg)
-                self.update_status("远程分支不存在", "#cc0000")
-                messagebox.showerror("错误", error_msg)
-                return
+                # 远程分支不存在,询问用户是否创建
+                self.set_loading(False)  # 暂时停止加载状态以便显示对话框
+                self.log("WARN", f"远程分支 '{target_branch}' 不存在")
 
-            self.log("INFO", f"远程分支 '{target_branch}' 存在")
+                question_msg = f"远程仓库中不存在分支 '{target_branch}'。\n\n是否要创建并推送该分支?"
+                result = messagebox.askyesno("创建分支", question_msg, icon='question')
+
+                if not result:
+                    # 用户选择不创建
+                    self.log("INFO", "用户取消创建分支")
+                    self.update_status("操作已取消", "#cc0000")
+                    return
+
+                # 用户确认创建分支
+                self.log("INFO", f"用户确认创建远程分支 '{target_branch}'")
+                self.set_loading(True)  # 恢复加载状态
+
+            self.log("INFO", f"远程分支 '{target_branch}' 准备就绪")
 
             # 获取当前分支名
             get_branch_cmd = f'cd "{code_path}" && git rev-parse --abbrev-ref HEAD'
@@ -653,11 +664,12 @@ class GitGuiApp:
             current_branch = branch_result.stdout.strip() or "master"
             self.log("INFO", f"当前本地分支: {current_branch}")
 
-            # 步骤4: 推送到远程仓库的指定分支
+            # 步骤4: 推送到远程仓库的指定分支(如果不存在会自动创建)
             push_cmd = f'cd "{code_path}" && git push -u origin {current_branch}:{target_branch}'
-            self.log("INFO", f"执行: 推送到远程分支 '{target_branch}'")
+            branch_action = "创建并推送" if check_result.returncode != 0 else "推送到"
+            self.log("INFO", f"执行: {branch_action}远程分支 '{target_branch}'")
             self.log("COMMAND", f"$ {push_cmd}")
-            self.update_status(f"正在推送到 {target_branch} 分支...", "#0066cc")
+            self.update_status(f"正在{branch_action} {target_branch} 分支...", "#0066cc")
 
             result = subprocess.run(push_cmd,
                                   shell=True,
@@ -790,6 +802,13 @@ class GitGuiApp:
             self.log("ERROR", f"扫描目录失败: {e}")
 
         return issues
+
+    def on_closing(self):
+        """窗口关闭事件处理"""
+        # 保存当前参数
+        self.save_config()
+        # 关闭窗口
+        self.root.destroy()
 
 def main():
     """主函数"""

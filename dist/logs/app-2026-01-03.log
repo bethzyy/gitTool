@@ -1,0 +1,12 @@
+[2026-01-03 15:18:05] [WARN] 加载配置失败: 'str' object has no attribute 'exists'
+[2026-01-03 15:18:05] [INFO] 应用程序启动 (配置文件: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json)
+[2026-01-03 15:18:16] [DEBUG] 配置已自动保存
+[2026-01-03 15:18:16] [INFO] 开始执行 Git 提交操作
+[2026-01-03 15:18:16] [INFO] 执行: 清理临时文件
+[2026-01-03 15:18:16] [INFO] 没有需要清理的临时文件
+[2026-01-03 15:18:16] [INFO] 执行安全检查...
+[2026-01-03 15:18:16] [INFO] 安全检查通过
+[2026-01-03 15:18:16] [INFO] 执行: 检查 Git 仓库
+[2026-01-03 15:18:16] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && (git rev-parse --git-dir >nul 2>&1 || git init)
+[2026-01-03 15:18:16] [INFO] 执行: 添加文件
+[2026-01-03 15:18:16] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git add .
