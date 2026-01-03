@@ -1,8 +1,0 @@
-[2026-01-03 14:51:39] [DEBUG] 已删除临时文件: C:\D\CAIE_tool\MyAIProduct\gitTool\logs\app-2026-01-03.log
-[2026-01-03 14:51:39] [INFO] 已清理 1 个临时文件
-[2026-01-03 14:51:39] [INFO] 执行安全检查...
-[2026-01-03 14:51:39] [INFO] 安全检查通过
-[2026-01-03 14:51:39] [INFO] 执行: 检查 Git 仓库
-[2026-01-03 14:51:39] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && (git rev-parse --git-dir >nul 2>&1 || git init)
-[2026-01-03 14:51:39] [INFO] 执行: 添加文件
-[2026-01-03 14:51:39] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git add .
