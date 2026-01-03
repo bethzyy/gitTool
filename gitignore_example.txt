@@ -1,0 +1,41 @@
+# 忽略可执行文件
+*.exe
+*.app
+*.out
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+*.tmp
+*.bak
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.user
+
+# 构建产物
+dist/
+build/
+*.spec

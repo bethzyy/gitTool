@@ -560,6 +560,75 @@ class GitGuiApp:
         except Exception as e:
             self.log("DEBUG", f"更新 .gitignore 失败: {str(e)}")
 
+    def ensure_gitignore_exists(self, code_path):
+        """确保项目中存在 .gitignore 文件
+        注意: 如果项目已有 .gitignore,则保持不变,不做任何修改
+
+        Args:
+            code_path: 项目根目录路径
+        """
+        import os
+        gitignore_path = os.path.join(code_path, '.gitignore')
+
+        try:
+            # 检查 .gitignore 是否存在
+            if os.path.exists(gitignore_path):
+                self.log("INFO", f"✓ .gitignore 已存在,保持不变: {gitignore_path}")
+            else:
+                # 创建 .gitignore 文件
+                self.log("INFO", f"创建 .gitignore 文件: {gitignore_path}")
+
+                default_gitignore_content = """# 忽略可执行文件
+*.exe
+*.app
+*.out
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# 日志文件
+*.log
+logs/
+
+# 临时文件
+*.tmp
+*.bak
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.user
+
+# 构建产物
+dist/
+build/
+*.spec
+"""
+
+                with open(gitignore_path, 'w', encoding='utf-8') as f:
+                    f.write(default_gitignore_content)
+
+                self.log("INFO", "✓ .gitignore 文件创建成功 (包含 *.exe 等常见规则)")
+
+        except Exception as e:
+            self.log("WARN", f"创建/检查 .gitignore 失败: {str(e)}")
+
     def execute_git_operations(self, repo_url, commit_msg, code_path, enable_security_check=True, target_branch="main"):
         """执行 Git 操作"""
         try:
@@ -574,6 +643,11 @@ class GitGuiApp:
                 self.log("INFO", f"已清理 {len(deleted_files)} 个临时文件")
             else:
                 self.log("INFO", "没有需要清理的临时文件")
+
+            # 步骤0.5: 确保 .gitignore 文件存在
+            self.update_status("正在检查 .gitignore...", "#0066cc")
+            self.log("INFO", "执行: 检查/创建 .gitignore")
+            self.ensure_gitignore_exists(code_path)
 
             # 步骤1: 安全检查（如果启用）
             if enable_security_check:
