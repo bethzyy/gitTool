@@ -101,3 +101,482 @@ warning: in the working copy of 'gitignore_example.txt', LF will be replaced by 
 [2026-01-03 15:52:38] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && (git rev-parse --git-dir >nul 2>&1 || git init)
 [2026-01-03 15:52:38] [INFO] 执行: 添加文件
 [2026-01-03 15:52:38] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git add .
+[2026-01-03 15:52:38] [DEBUG] 警告: warning: in the working copy of 'CLAUDE.md', LF will be replaced by CRLF the next time Git touches it
+[2026-01-03 15:52:38] [INFO] 执行: 提交更改
+[2026-01-03 15:52:38] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git commit -m "update CLAUDE.md"
+[2026-01-03 15:52:39] [DEBUG] [master e2f3e35] update CLAUDE.md
+ 3 files changed, 143 insertions(+), 17 deletions(-)
+[2026-01-03 15:52:39] [INFO] 执行: 添加远程仓库
+[2026-01-03 15:52:39] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && (git remote add origin git@github.com:bethzyy/gitTool.git >nul 2>&1 || git remote set-url origin git@github.com:bethzyy/gitTool.git >nul 2>&1)
+[2026-01-03 15:52:39] [INFO] 检查远程分支 'master' 是否存在
+[2026-01-03 15:52:39] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git fetch origin
+[2026-01-03 15:52:44] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git rev-parse --verify origin/master
+[2026-01-03 15:52:44] [INFO] 远程分支 'master' 准备就绪
+[2026-01-03 15:52:44] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git rev-parse --abbrev-ref HEAD
+[2026-01-03 15:52:44] [INFO] 当前本地分支: master
+[2026-01-03 15:52:44] [INFO] 执行: 推送到远程分支 'master'
+[2026-01-03 15:52:44] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git push -u origin master:master
+[2026-01-03 15:52:48] [DEBUG] branch 'master' set up to track 'origin/master'.
+[2026-01-03 15:52:49] [INFO] Git 操作成功完成
+[2026-01-03 15:52:55] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 15:52:55] [INFO] [配置保存] 仓库名称: gitTool
+[2026-01-03 15:52:55] [INFO] [配置保存] 提交信息: update CLAUDE.md
+[2026-01-03 15:52:55] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\gitTool
+[2026-01-03 15:52:55] [INFO] [配置保存] 分支选择: master
+[2026-01-03 15:52:55] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 15:52:55] [INFO] [配置保存] 安全检查: True
+[2026-01-03 15:52:55] [INFO] [配置保存] 配置保存成功
+[2026-01-03 16:00:18] [INFO] [配置加载] 配置文件路径: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 16:00:19] [INFO] [配置加载] 文件是否存在: True
+[2026-01-03 16:00:19] [INFO] [配置加载] 成功读取配置文件
+[2026-01-03 16:00:19] [INFO] [配置加载] 上次保存时间: 2026-01-03 15:52:55
+[2026-01-03 16:00:19] [INFO] [配置加载] ✓ 仓库名称: gitTool
+[2026-01-03 16:00:19] [INFO] [配置加载] ✓ 提交信息: update CLAUDE.md
+[2026-01-03 16:00:19] [INFO] [配置加载] ✓ 代码路径: C:\D\CAIE_tool\MyAIProduct\gitTool
+[2026-01-03 16:00:19] [INFO] [配置加载] ✓ 分支选择: master
+[2026-01-03 16:00:19] [DEBUG] [配置加载] 自定义分支为空，跳过
+[2026-01-03 16:00:19] [INFO] [配置加载] ✓ 安全检查: True
+[2026-01-03 16:00:19] [INFO] [配置加载] ✓ 配置加载完成
+[2026-01-03 16:00:19] [INFO] 应用程序启动 (配置文件: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json)
+[2026-01-03 16:07:26] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 16:07:26] [INFO] [配置保存] 仓库名称: newYear
+[2026-01-03 16:07:26] [INFO] [配置保存] 提交信息: run on phone
+[2026-01-03 16:07:26] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\newYear
+[2026-01-03 16:07:26] [INFO] [配置保存] 分支选择: main
+[2026-01-03 16:07:26] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 16:07:26] [INFO] [配置保存] 安全检查: True
+[2026-01-03 16:07:26] [INFO] [配置保存] 配置保存成功
+[2026-01-03 16:07:26] [INFO] 开始执行 Git 提交操作
+[2026-01-03 16:07:26] [INFO] 执行: 清理临时文件
+[2026-01-03 16:07:26] [INFO] 没有需要清理的临时文件
+[2026-01-03 16:07:26] [INFO] 执行: 检查/创建 .gitignore
+[2026-01-03 16:07:26] [INFO] 创建 .gitignore 文件: C:\D\CAIE_tool\MyAIProduct\newYear\.gitignore
+[2026-01-03 16:07:26] [INFO] ✓ .gitignore 文件创建成功 (包含 *.exe 等常见规则)
+[2026-01-03 16:07:26] [INFO] 执行安全检查...
+[2026-01-03 16:07:26] [INFO] 安全检查通过
+[2026-01-03 16:07:26] [INFO] 执行: 检查 Git 仓库
+[2026-01-03 16:07:26] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && (git rev-parse --git-dir >nul 2>&1 || git init)
+[2026-01-03 16:07:27] [INFO] 执行: 添加文件
+[2026-01-03 16:07:27] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git add .
+[2026-01-03 16:07:27] [DEBUG] 警告: warning: in the working copy of 'pages/index/index.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'pages/index/index.wxml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'images/coin.svg', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'images/firecracker.svg', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'images/fish.svg', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'images/horse.svg', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'images/ingot.svg', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'images/lantern.svg', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'images/peach.svg', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '使用指南.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '启动指南.bat', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '启动指南.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '开始使用.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '快速开始.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '手机版.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '手机版使用指南.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '项目清单.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '🎉完成总结.md', LF will be replaced by CRLF the next time Git touches it
+[2026-01-03 16:07:27] [INFO] 执行: 提交更改
+[2026-01-03 16:07:27] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git commit -m "run on phone"
+[2026-01-03 16:07:27] [DEBUG] [master d4bb66b] run on phone
+ 19 files changed, 2509 insertions(+), 8 deletions(-)
+ create mode 100644 .gitignore
+ create mode 100644 images/coin.svg
+ create mode 100644 images/firecracker.svg
+ create mode 100644 images/fish.svg
+ create mode 100644 images/horse.svg
+ create mode 100644 images/ingot.svg
+ create mode 100644 images/lantern.svg
+ create mode 100644 images/peach.svg
+ create mode 100644 "\344\275\277\347\224\250\346\214\207\345\215\227.md"
+ create mode 100644 "\345\220\257\345\212\250\346\214\207\345\215\227.bat"
+ create mode 100644 "\345\220\257\345\212\250\346\214\207\345\215\227.html"
+ create mode 100644 "\345\274\200\345\247\213\344\275\277\347\224\250.txt"
+ create mode 100644 "\345\277\253\351\200\237\345\274\200\345\247\213.txt"
+ create mode 100644 "\346\211\213\346\234\272\347\211\210.html"
+ create mode 100644 "\346\211\213\346\234\272\347\211\210\344\275\277\347\224\250\346\214\207\345\215\227.md"
+ create mode 100644 "\351\241\271\347\233\256\346\270\205\345\215\225.md"
+ create mode 100644 "\360\237\216\211\345\256\214\346\210\220\346\200\273\347\273\223.md"
+[2026-01-03 16:07:27] [INFO] 执行: 添加远程仓库
+[2026-01-03 16:07:27] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && (git remote add origin git@github.com:bethzyy/newYear.git >nul 2>&1 || git remote set-url origin git@github.com:bethzyy/newYear.git >nul 2>&1)
+[2026-01-03 16:07:28] [INFO] 检查远程分支 'main' 是否存在
+[2026-01-03 16:07:28] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git fetch origin
+[2026-01-03 16:07:33] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git rev-parse --verify origin/main
+[2026-01-03 16:07:33] [INFO] 远程分支 'main' 准备就绪
+[2026-01-03 16:07:33] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git rev-parse --abbrev-ref HEAD
+[2026-01-03 16:07:33] [INFO] 当前本地分支: master
+[2026-01-03 16:07:33] [INFO] 执行: 推送到远程分支 'main'
+[2026-01-03 16:07:33] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git push -u origin master:main
+[2026-01-03 16:07:38] [DEBUG] branch 'master' set up to track 'origin/main'.
+[2026-01-03 16:07:38] [INFO] Git 操作成功完成
+[2026-01-03 16:42:37] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 16:42:37] [INFO] [配置保存] 仓库名称: newYear
+[2026-01-03 16:42:37] [INFO] [配置保存] 提交信息: add music
+[2026-01-03 16:42:37] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\newYear
+[2026-01-03 16:42:37] [INFO] [配置保存] 分支选择: main
+[2026-01-03 16:42:37] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 16:42:37] [INFO] [配置保存] 安全检查: True
+[2026-01-03 16:42:37] [INFO] [配置保存] 配置保存成功
+[2026-01-03 16:42:37] [INFO] 开始执行 Git 提交操作
+[2026-01-03 16:42:37] [INFO] 执行: 清理临时文件
+[2026-01-03 16:42:37] [INFO] 没有需要清理的临时文件
+[2026-01-03 16:42:37] [INFO] 执行: 检查/创建 .gitignore
+[2026-01-03 16:42:37] [INFO] ✓ .gitignore 已存在,保持不变: C:\D\CAIE_tool\MyAIProduct\newYear\.gitignore
+[2026-01-03 16:42:37] [INFO] 执行安全检查...
+[2026-01-03 16:42:37] [INFO] 安全检查通过
+[2026-01-03 16:42:37] [INFO] 执行: 检查 Git 仓库
+[2026-01-03 16:42:37] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && (git rev-parse --git-dir >nul 2>&1 || git init)
+[2026-01-03 16:42:38] [INFO] 执行: 添加文件
+[2026-01-03 16:42:38] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git add .
+[2026-01-03 16:42:38] [DEBUG] 警告: warning: in the working copy of 'pages/index/index.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'pages/index/index.wxml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'pages/index/index.wxss', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '手机版.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '✨更新说明.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '🎨全新设计.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '🏯故宫风格大门.md', LF will be replaced by CRLF the next time Git touches it
+[2026-01-03 16:42:38] [INFO] 执行: 提交更改
+[2026-01-03 16:42:38] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git commit -m "add music"
+[2026-01-03 16:42:38] [DEBUG] [master a2d98d4] add music
+ 7 files changed, 1325 insertions(+), 202 deletions(-)
+ create mode 100644 "\342\234\250\346\233\264\346\226\260\350\257\264\346\230\216.md"
+ create mode 100644 "\360\237\216\250\345\205\250\346\226\260\350\256\276\350\256\241.md"
+ create mode 100644 "\360\237\217\257\346\225\205\345\256\253\351\243\216\346\240\274\345\244\247\351\227\250.md"
+[2026-01-03 16:42:38] [INFO] 执行: 添加远程仓库
+[2026-01-03 16:42:38] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && (git remote add origin git@github.com:bethzyy/newYear.git >nul 2>&1 || git remote set-url origin git@github.com:bethzyy/newYear.git >nul 2>&1)
+[2026-01-03 16:42:39] [INFO] 检查远程分支 'main' 是否存在
+[2026-01-03 16:42:39] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git fetch origin
+[2026-01-03 16:42:43] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git rev-parse --verify origin/main
+[2026-01-03 16:42:44] [INFO] 远程分支 'main' 准备就绪
+[2026-01-03 16:42:44] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git rev-parse --abbrev-ref HEAD
+[2026-01-03 16:42:44] [INFO] 当前本地分支: master
+[2026-01-03 16:42:44] [INFO] 执行: 推送到远程分支 'main'
+[2026-01-03 16:42:44] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git push -u origin master:main
+[2026-01-03 16:42:48] [DEBUG] branch 'master' set up to track 'origin/main'.
+[2026-01-03 16:42:48] [INFO] Git 操作成功完成
+[2026-01-03 16:42:56] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 16:42:56] [INFO] [配置保存] 仓库名称: newYear
+[2026-01-03 16:42:56] [INFO] [配置保存] 提交信息: add music
+[2026-01-03 16:42:56] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\newYear
+[2026-01-03 16:42:56] [INFO] [配置保存] 分支选择: main
+[2026-01-03 16:42:56] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 16:42:56] [INFO] [配置保存] 安全检查: True
+[2026-01-03 16:42:56] [INFO] [配置保存] 配置保存成功
+[2026-01-03 16:56:01] [INFO] [配置加载] 配置文件路径: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 16:56:01] [INFO] [配置加载] 文件是否存在: True
+[2026-01-03 16:56:01] [INFO] [配置加载] 成功读取配置文件
+[2026-01-03 16:56:01] [INFO] [配置加载] 上次保存时间: 2026-01-03 16:42:56
+[2026-01-03 16:56:01] [INFO] [配置加载] ✓ 仓库名称: newYear
+[2026-01-03 16:56:01] [INFO] [配置加载] ✓ 提交信息: add music
+[2026-01-03 16:56:01] [INFO] [配置加载] ✓ 代码路径: C:\D\CAIE_tool\MyAIProduct\newYear
+[2026-01-03 16:56:01] [INFO] [配置加载] ✓ 分支选择: main
+[2026-01-03 16:56:01] [DEBUG] [配置加载] 自定义分支为空，跳过
+[2026-01-03 16:56:01] [INFO] [配置加载] ✓ 安全检查: True
+[2026-01-03 16:56:01] [INFO] [配置加载] ✓ 配置加载完成
+[2026-01-03 16:56:01] [INFO] 应用程序启动 (配置文件: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json)
+[2026-01-03 16:56:11] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 16:56:11] [INFO] [配置保存] 仓库名称: newYear
+[2026-01-03 16:56:11] [INFO] [配置保存] 提交信息: remove 红包字样
+[2026-01-03 16:56:12] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\newYear
+[2026-01-03 16:56:12] [INFO] [配置保存] 分支选择: main
+[2026-01-03 16:56:12] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 16:56:12] [INFO] [配置保存] 安全检查: True
+[2026-01-03 16:56:12] [INFO] [配置保存] 配置保存成功
+[2026-01-03 16:56:12] [INFO] 开始执行 Git 提交操作
+[2026-01-03 16:56:12] [INFO] 执行: 清理临时文件
+[2026-01-03 16:56:12] [INFO] 没有需要清理的临时文件
+[2026-01-03 16:56:12] [INFO] 执行: 检查/创建 .gitignore
+[2026-01-03 16:56:12] [INFO] ✓ .gitignore 已存在,保持不变: C:\D\CAIE_tool\MyAIProduct\newYear\.gitignore
+[2026-01-03 16:56:12] [INFO] 执行安全检查...
+[2026-01-03 16:56:12] [INFO] 安全检查通过
+[2026-01-03 16:56:12] [INFO] 执行: 检查 Git 仓库
+[2026-01-03 16:56:12] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && (git rev-parse --git-dir >nul 2>&1 || git init)
+[2026-01-03 16:56:12] [INFO] 执行: 添加文件
+[2026-01-03 16:56:12] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git add .
+[2026-01-03 16:56:12] [DEBUG] 警告: warning: in the working copy of '快速开始.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '手机版.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '🏯故宫风格大门.md', LF will be replaced by CRLF the next time Git touches it
+[2026-01-03 16:56:12] [INFO] 执行: 提交更改
+[2026-01-03 16:56:12] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git commit -m "remove 红包字样"
+[2026-01-03 16:56:12] [DEBUG] [master 15b022e] remove 红包字样
+ 3 files changed, 226 insertions(+), 257 deletions(-)
+[2026-01-03 16:56:12] [INFO] 执行: 添加远程仓库
+[2026-01-03 16:56:12] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && (git remote add origin git@github.com:bethzyy/newYear.git >nul 2>&1 || git remote set-url origin git@github.com:bethzyy/newYear.git >nul 2>&1)
+[2026-01-03 16:56:13] [INFO] 检查远程分支 'main' 是否存在
+[2026-01-03 16:56:13] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git fetch origin
+[2026-01-03 16:56:17] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git rev-parse --verify origin/main
+[2026-01-03 16:56:18] [INFO] 远程分支 'main' 准备就绪
+[2026-01-03 16:56:18] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git rev-parse --abbrev-ref HEAD
+[2026-01-03 16:56:18] [INFO] 当前本地分支: master
+[2026-01-03 16:56:18] [INFO] 执行: 推送到远程分支 'main'
+[2026-01-03 16:56:18] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git push -u origin master:main
+[2026-01-03 16:56:22] [DEBUG] branch 'master' set up to track 'origin/main'.
+[2026-01-03 16:56:22] [INFO] Git 操作成功完成
+[2026-01-03 16:56:27] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 16:56:27] [INFO] [配置保存] 仓库名称: newYear
+[2026-01-03 16:56:27] [INFO] [配置保存] 提交信息: remove 红包字样
+[2026-01-03 16:56:27] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\newYear
+[2026-01-03 16:56:27] [INFO] [配置保存] 分支选择: main
+[2026-01-03 16:56:27] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 16:56:27] [INFO] [配置保存] 安全检查: True
+[2026-01-03 16:56:27] [INFO] [配置保存] 配置保存成功
+[2026-01-03 17:04:27] [INFO] [配置加载] 配置文件路径: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 17:04:28] [INFO] [配置加载] 文件是否存在: True
+[2026-01-03 17:04:28] [INFO] [配置加载] 成功读取配置文件
+[2026-01-03 17:04:28] [INFO] [配置加载] 上次保存时间: 2026-01-03 16:56:27
+[2026-01-03 17:04:28] [INFO] [配置加载] ✓ 仓库名称: newYear
+[2026-01-03 17:04:28] [INFO] [配置加载] ✓ 提交信息: remove 红包字样
+[2026-01-03 17:04:28] [INFO] [配置加载] ✓ 代码路径: C:\D\CAIE_tool\MyAIProduct\newYear
+[2026-01-03 17:04:28] [INFO] [配置加载] ✓ 分支选择: main
+[2026-01-03 17:04:28] [DEBUG] [配置加载] 自定义分支为空，跳过
+[2026-01-03 17:04:28] [INFO] [配置加载] ✓ 安全检查: True
+[2026-01-03 17:04:28] [INFO] [配置加载] ✓ 配置加载完成
+[2026-01-03 17:04:28] [INFO] 应用程序启动 (配置文件: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json)
+[2026-01-03 17:04:35] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 17:04:35] [INFO] [配置保存] 仓库名称: newYear
+[2026-01-03 17:04:35] [INFO] [配置保存] 提交信息: remove 红包字样 again
+[2026-01-03 17:04:35] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\newYear
+[2026-01-03 17:04:35] [INFO] [配置保存] 分支选择: main
+[2026-01-03 17:04:35] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 17:04:35] [INFO] [配置保存] 安全检查: True
+[2026-01-03 17:04:35] [INFO] [配置保存] 配置保存成功
+[2026-01-03 17:04:35] [INFO] 开始执行 Git 提交操作
+[2026-01-03 17:04:35] [INFO] 执行: 清理临时文件
+[2026-01-03 17:04:35] [INFO] 没有需要清理的临时文件
+[2026-01-03 17:04:35] [INFO] 执行: 检查/创建 .gitignore
+[2026-01-03 17:04:35] [INFO] ✓ .gitignore 已存在,保持不变: C:\D\CAIE_tool\MyAIProduct\newYear\.gitignore
+[2026-01-03 17:04:35] [INFO] 执行安全检查...
+[2026-01-03 17:04:35] [INFO] 安全检查通过
+[2026-01-03 17:04:35] [INFO] 执行: 检查 Git 仓库
+[2026-01-03 17:04:35] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && (git rev-parse --git-dir >nul 2>&1 || git init)
+[2026-01-03 17:04:35] [INFO] 执行: 添加文件
+[2026-01-03 17:04:35] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git add .
+[2026-01-03 17:04:36] [DEBUG] 警告: warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+[2026-01-03 17:04:36] [INFO] 执行: 提交更改
+[2026-01-03 17:04:36] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git commit -m "remove 红包字样 again"
+[2026-01-03 17:04:36] [DEBUG] [master b17e921] remove 红包字样 again
+ 1 file changed, 133 insertions(+), 88 deletions(-)
+[2026-01-03 17:04:36] [INFO] 执行: 添加远程仓库
+[2026-01-03 17:04:36] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && (git remote add origin git@github.com:bethzyy/newYear.git >nul 2>&1 || git remote set-url origin git@github.com:bethzyy/newYear.git >nul 2>&1)
+[2026-01-03 17:04:36] [INFO] 检查远程分支 'main' 是否存在
+[2026-01-03 17:04:36] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git fetch origin
+[2026-01-03 17:04:41] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git rev-parse --verify origin/main
+[2026-01-03 17:04:42] [INFO] 远程分支 'main' 准备就绪
+[2026-01-03 17:04:42] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git rev-parse --abbrev-ref HEAD
+[2026-01-03 17:04:42] [INFO] 当前本地分支: master
+[2026-01-03 17:04:42] [INFO] 执行: 推送到远程分支 'main'
+[2026-01-03 17:04:42] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\newYear" && git push -u origin master:main
+[2026-01-03 17:04:46] [DEBUG] branch 'master' set up to track 'origin/main'.
+[2026-01-03 17:04:46] [INFO] Git 操作成功完成
+[2026-01-03 17:06:39] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 17:06:39] [INFO] [配置保存] 仓库名称: bigFile
+[2026-01-03 17:06:39] [INFO] [配置保存] 提交信息: file upload/download for linux
+[2026-01-03 17:06:39] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\hkk
+[2026-01-03 17:06:39] [INFO] [配置保存] 分支选择: main
+[2026-01-03 17:06:39] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 17:06:39] [INFO] [配置保存] 安全检查: True
+[2026-01-03 17:06:39] [INFO] [配置保存] 配置保存成功
+[2026-01-03 17:06:39] [INFO] 开始执行 Git 提交操作
+[2026-01-03 17:06:39] [INFO] 执行: 清理临时文件
+[2026-01-03 17:06:39] [INFO] 没有需要清理的临时文件
+[2026-01-03 17:06:39] [INFO] 执行: 检查/创建 .gitignore
+[2026-01-03 17:06:39] [INFO] ✓ .gitignore 已存在,保持不变: C:\D\CAIE_tool\MyAIProduct\hkk\.gitignore
+[2026-01-03 17:06:39] [INFO] 执行安全检查...
+[2026-01-03 17:06:39] [INFO] 安全检查通过
+[2026-01-03 17:06:39] [INFO] 执行: 检查 Git 仓库
+[2026-01-03 17:06:39] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && (git rev-parse --git-dir >nul 2>&1 || git init)
+[2026-01-03 17:06:39] [DEBUG] Initialized empty Git repository in C:/D/CAIE_tool/MyAIProduct/hkk/.git/
+[2026-01-03 17:06:39] [INFO] 执行: 添加文件
+[2026-01-03 17:06:39] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git add .
+[2026-01-03 17:06:39] [DEBUG] 警告: warning: in the working copy of '.env.example', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'install_service.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'requirements.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'restart.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'start.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'stop.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'templates/index.html', LF will be replaced by CRLF the next time Git touches it
+[2026-01-03 17:06:39] [INFO] 执行: 提交更改
+[2026-01-03 17:06:39] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git commit -m "file upload/download for linux"
+[2026-01-03 17:06:40] [DEBUG] [master (root-commit) 26289e4] file upload/download for linux
+ 10 files changed, 1595 insertions(+)
+ create mode 100644 .env.example
+ create mode 100644 .gitignore
+ create mode 100644 README.md
+ create mode 100644 app.py
+ create mode 100644 install_service.sh
+ create mode 100644 requirements.txt
+ create mode 100644 restart.sh
+ create mode 100644 start.sh
+ create mode 100644 stop.sh
+ create mode 100644 templates/index.html
+[2026-01-03 17:06:40] [INFO] 执行: 添加远程仓库
+[2026-01-03 17:06:40] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && (git remote add origin git@github.com:bethzyy/bigFile.git >nul 2>&1 || git remote set-url origin git@github.com:bethzyy/bigFile.git >nul 2>&1)
+[2026-01-03 17:06:40] [INFO] 检查远程分支 'main' 是否存在
+[2026-01-03 17:06:40] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git fetch origin
+[2026-01-03 17:06:44] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git rev-parse --verify origin/main
+[2026-01-03 17:06:45] [WARN] 远程分支 'main' 不存在
+[2026-01-03 17:06:46] [INFO] 用户确认创建远程分支 'main'
+[2026-01-03 17:06:46] [INFO] 远程分支 'main' 准备就绪
+[2026-01-03 17:06:46] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git rev-parse --abbrev-ref HEAD
+[2026-01-03 17:06:47] [INFO] 当前本地分支: master
+[2026-01-03 17:06:47] [INFO] 执行: 创建并推送远程分支 'main'
+[2026-01-03 17:06:47] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git push -u origin master:main
+[2026-01-03 17:06:51] [DEBUG] branch 'master' set up to track 'origin/main'.
+[2026-01-03 17:06:51] [INFO] Git 操作成功完成
+[2026-01-03 17:09:37] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 17:09:37] [INFO] [配置保存] 仓库名称: bigFile
+[2026-01-03 17:09:37] [INFO] [配置保存] 提交信息: file upload/download for linux
+[2026-01-03 17:09:37] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\hkk
+[2026-01-03 17:09:37] [INFO] [配置保存] 分支选择: main
+[2026-01-03 17:09:37] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 17:09:37] [INFO] [配置保存] 安全检查: True
+[2026-01-03 17:09:37] [INFO] [配置保存] 配置保存成功
+[2026-01-03 17:27:57] [INFO] [配置加载] 配置文件路径: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 17:27:57] [INFO] [配置加载] 文件是否存在: True
+[2026-01-03 17:27:57] [INFO] [配置加载] 成功读取配置文件
+[2026-01-03 17:27:57] [INFO] [配置加载] 上次保存时间: 2026-01-03 17:09:37
+[2026-01-03 17:27:57] [INFO] [配置加载] ✓ 仓库名称: bigFile
+[2026-01-03 17:27:57] [INFO] [配置加载] ✓ 提交信息: file upload/download for linux
+[2026-01-03 17:27:57] [INFO] [配置加载] ✓ 代码路径: C:\D\CAIE_tool\MyAIProduct\hkk
+[2026-01-03 17:27:57] [INFO] [配置加载] ✓ 分支选择: main
+[2026-01-03 17:27:57] [DEBUG] [配置加载] 自定义分支为空，跳过
+[2026-01-03 17:27:57] [INFO] [配置加载] ✓ 安全检查: True
+[2026-01-03 17:27:57] [INFO] [配置加载] ✓ 配置加载完成
+[2026-01-03 17:27:57] [INFO] 应用程序启动 (配置文件: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json)
+[2026-01-03 17:28:15] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 17:28:15] [INFO] [配置保存] 仓库名称: bigFile
+[2026-01-03 17:28:16] [INFO] [配置保存] 提交信息: use c instead of python
+[2026-01-03 17:28:16] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\hkk
+[2026-01-03 17:28:16] [INFO] [配置保存] 分支选择: main
+[2026-01-03 17:28:16] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 17:28:16] [INFO] [配置保存] 安全检查: True
+[2026-01-03 17:28:16] [INFO] [配置保存] 配置保存成功
+[2026-01-03 17:28:16] [INFO] 开始执行 Git 提交操作
+[2026-01-03 17:28:16] [INFO] 执行: 清理临时文件
+[2026-01-03 17:28:16] [INFO] 没有需要清理的临时文件
+[2026-01-03 17:28:16] [INFO] 执行: 检查/创建 .gitignore
+[2026-01-03 17:28:16] [INFO] ✓ .gitignore 已存在,保持不变: C:\D\CAIE_tool\MyAIProduct\hkk\.gitignore
+[2026-01-03 17:28:16] [INFO] 执行安全检查...
+[2026-01-03 17:28:16] [INFO] 安全检查通过
+[2026-01-03 17:28:16] [INFO] 执行: 检查 Git 仓库
+[2026-01-03 17:28:16] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && (git rev-parse --git-dir >nul 2>&1 || git init)
+[2026-01-03 17:28:16] [INFO] 执行: 添加文件
+[2026-01-03 17:28:16] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git add .
+[2026-01-03 17:28:16] [DEBUG] 警告: warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'Makefile', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'README_C.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'VERSIONS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'build.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'install_service_c.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'requirements_c.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'server.c', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'start_c.sh', LF will be replaced by CRLF the next time Git touches it
+[2026-01-03 17:28:16] [INFO] 执行: 提交更改
+[2026-01-03 17:28:16] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git commit -m "use c instead of python"
+[2026-01-03 17:28:17] [DEBUG] [master eba195e] use c instead of python
+ 9 files changed, 1792 insertions(+), 380 deletions(-)
+ create mode 100644 Makefile
+ create mode 100644 README_C.md
+ create mode 100644 VERSIONS.md
+ create mode 100644 build.sh
+ create mode 100644 install_service_c.sh
+ create mode 100644 requirements_c.txt
+ create mode 100644 server.c
+ create mode 100644 start_c.sh
+[2026-01-03 17:28:17] [INFO] 执行: 添加远程仓库
+[2026-01-03 17:28:17] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && (git remote add origin git@github.com:bethzyy/bigFile.git >nul 2>&1 || git remote set-url origin git@github.com:bethzyy/bigFile.git >nul 2>&1)
+[2026-01-03 17:28:17] [INFO] 检查远程分支 'main' 是否存在
+[2026-01-03 17:28:17] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git fetch origin
+[2026-01-03 17:28:21] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git rev-parse --verify origin/main
+[2026-01-03 17:28:22] [INFO] 远程分支 'main' 准备就绪
+[2026-01-03 17:28:22] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git rev-parse --abbrev-ref HEAD
+[2026-01-03 17:28:22] [INFO] 当前本地分支: master
+[2026-01-03 17:28:22] [INFO] 执行: 推送到远程分支 'main'
+[2026-01-03 17:28:22] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git push -u origin master:main
+[2026-01-03 17:28:27] [DEBUG] branch 'master' set up to track 'origin/main'.
+[2026-01-03 17:28:27] [INFO] Git 操作成功完成
+[2026-01-03 17:34:38] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 17:34:38] [INFO] [配置保存] 仓库名称: bigFile
+[2026-01-03 17:34:38] [INFO] [配置保存] 提交信息: keep c only
+[2026-01-03 17:34:38] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\hkk
+[2026-01-03 17:34:38] [INFO] [配置保存] 分支选择: main
+[2026-01-03 17:34:38] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 17:34:38] [INFO] [配置保存] 安全检查: True
+[2026-01-03 17:34:38] [INFO] [配置保存] 配置保存成功
+[2026-01-03 17:34:38] [INFO] 开始执行 Git 提交操作
+[2026-01-03 17:34:38] [INFO] 执行: 清理临时文件
+[2026-01-03 17:34:38] [INFO] 没有需要清理的临时文件
+[2026-01-03 17:34:38] [INFO] 执行: 检查/创建 .gitignore
+[2026-01-03 17:34:38] [INFO] ✓ .gitignore 已存在,保持不变: C:\D\CAIE_tool\MyAIProduct\hkk\.gitignore
+[2026-01-03 17:34:38] [INFO] 执行安全检查...
+[2026-01-03 17:34:38] [INFO] 安全检查通过
+[2026-01-03 17:34:38] [INFO] 执行: 检查 Git 仓库
+[2026-01-03 17:34:38] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && (git rev-parse --git-dir >nul 2>&1 || git init)
+[2026-01-03 17:34:39] [INFO] 执行: 添加文件
+[2026-01-03 17:34:39] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git add .
+[2026-01-03 17:34:39] [DEBUG] 警告: warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+[2026-01-03 17:34:39] [INFO] 执行: 提交更改
+[2026-01-03 17:34:39] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git commit -m "keep c only"
+[2026-01-03 17:34:39] [DEBUG] [master 55ae648] keep c only
+ 8 files changed, 446 insertions(+), 1296 deletions(-)
+ delete mode 100644 README_C.md
+ delete mode 100644 VERSIONS.md
+ delete mode 100644 app.py
+ delete mode 100644 install_service.sh
+ delete mode 100644 requirements.txt
+ delete mode 100644 requirements_c.txt
+ delete mode 100644 start.sh
+[2026-01-03 17:34:39] [INFO] 执行: 添加远程仓库
+[2026-01-03 17:34:39] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && (git remote add origin git@github.com:bethzyy/bigFile.git >nul 2>&1 || git remote set-url origin git@github.com:bethzyy/bigFile.git >nul 2>&1)
+[2026-01-03 17:34:40] [INFO] 检查远程分支 'main' 是否存在
+[2026-01-03 17:34:40] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git fetch origin
+[2026-01-03 17:34:44] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git rev-parse --verify origin/main
+[2026-01-03 17:34:44] [INFO] 远程分支 'main' 准备就绪
+[2026-01-03 17:34:44] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git rev-parse --abbrev-ref HEAD
+[2026-01-03 17:34:45] [INFO] 当前本地分支: master
+[2026-01-03 17:34:45] [INFO] 执行: 推送到远程分支 'main'
+[2026-01-03 17:34:45] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\hkk" && git push -u origin master:main
+[2026-01-03 17:34:49] [DEBUG] branch 'master' set up to track 'origin/main'.
+[2026-01-03 17:34:49] [INFO] Git 操作成功完成
+[2026-01-03 17:52:03] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 17:52:03] [INFO] [配置保存] 仓库名称: bigFile
+[2026-01-03 17:52:03] [INFO] [配置保存] 提交信息: keep c only
+[2026-01-03 17:52:03] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\hkk
+[2026-01-03 17:52:03] [INFO] [配置保存] 分支选择: main
+[2026-01-03 17:52:03] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 17:52:03] [INFO] [配置保存] 安全检查: True
+[2026-01-03 17:52:03] [INFO] [配置保存] 配置保存成功
+[2026-01-03 21:38:27] [INFO] [配置加载] 配置文件路径: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 21:38:28] [INFO] [配置加载] 文件是否存在: True
+[2026-01-03 21:38:28] [INFO] [配置加载] 成功读取配置文件
+[2026-01-03 21:38:28] [INFO] [配置加载] 上次保存时间: 2026-01-03 17:52:03
+[2026-01-03 21:38:28] [INFO] [配置加载] ✓ 仓库名称: bigFile
+[2026-01-03 21:38:28] [INFO] [配置加载] ✓ 提交信息: keep c only
+[2026-01-03 21:38:28] [INFO] [配置加载] ✓ 代码路径: C:\D\CAIE_tool\MyAIProduct\hkk
+[2026-01-03 21:38:28] [INFO] [配置加载] ✓ 分支选择: main
+[2026-01-03 21:38:28] [DEBUG] [配置加载] 自定义分支为空，跳过
+[2026-01-03 21:38:28] [INFO] [配置加载] ✓ 安全检查: True
+[2026-01-03 21:38:28] [INFO] [配置加载] ✓ 配置加载完成
+[2026-01-03 21:38:28] [INFO] 应用程序启动 (配置文件: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json)
+[2026-01-03 21:39:36] [INFO] [配置保存] 准备保存配置到: C:\D\CAIE_tool\MyAIProduct\gitTool\dist\user_config.json
+[2026-01-03 21:39:36] [INFO] [配置保存] 仓库名称: gitTool
+[2026-01-03 21:39:36] [INFO] [配置保存] 提交信息: liepin foreign snap ok
+[2026-01-03 21:39:36] [INFO] [配置保存] 代码路径: C:\D\CAIE_tool\MyAIProduct\gitTool
+[2026-01-03 21:39:36] [INFO] [配置保存] 分支选择: master
+[2026-01-03 21:39:36] [INFO] [配置保存] 自定义分支: 
+[2026-01-03 21:39:36] [INFO] [配置保存] 安全检查: True
+[2026-01-03 21:39:36] [INFO] [配置保存] 配置保存成功
+[2026-01-03 21:39:36] [INFO] 开始执行 Git 提交操作
+[2026-01-03 21:39:36] [INFO] 执行: 清理临时文件
+[2026-01-03 21:39:37] [INFO] 没有需要清理的临时文件
+[2026-01-03 21:39:37] [INFO] 执行: 检查/创建 .gitignore
+[2026-01-03 21:39:37] [INFO] ✓ .gitignore 已存在,保持不变: C:\D\CAIE_tool\MyAIProduct\gitTool\.gitignore
+[2026-01-03 21:39:37] [INFO] 执行安全检查...
+[2026-01-03 21:39:37] [INFO] 安全检查通过
+[2026-01-03 21:39:37] [INFO] 执行: 检查 Git 仓库
+[2026-01-03 21:39:37] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && (git rev-parse --git-dir >nul 2>&1 || git init)
+[2026-01-03 21:39:37] [INFO] 执行: 添加文件
+[2026-01-03 21:39:37] [COMMAND] $ cd "C:\D\CAIE_tool\MyAIProduct\gitTool" && git add .
